@@ -1,0 +1,3 @@
+ErrorDocument 404 /obilan/erreur/404.php
+ErrorDocument 500 /erreur/500.php
+ErrorDocument 504 /erreur/504.php

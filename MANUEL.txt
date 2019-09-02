@@ -1,0 +1,22 @@
+INSTALLATION DU SITE
+	
+	Création de la base avec "creation_bdd_obilan.sql"
+	/!\ Supprimer le fichier de création après installation
+	/!\ Supprimer le fichier "MANUEL.txt"
+
+GESTION DES ERREURS A L'INSCRIPTION
+
+	Renvoi sur la page d'inscription avec un pop up expliquant l'erreur
+	Si erreur d'écriture dans la base, renvoi l'erreur exacte en console
+
+ENVOI DE MAIL
+
+	/!\ NE PAS CHANGER L'ORDRE DES DECLARATIONS /!\
+
+PLUG-IN FB
+
+	/!\ Si protection contre le pistage activé sur le navigateur client, blocage du plug-in
+
+GESTION DES ERREURS 404, 500 et 504
+
+	Dans ".htaccess", remplacer /obilan/erreur/ (local) par /erreur/ (web) à la mise en ligne du site
