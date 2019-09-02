@@ -4,12 +4,22 @@
 
 	if(!isset($_GET['equ']))
 	{
-		header("Location: ./accueil.php");
-		exit();
+		if(!isset($_GET['jou']))
+		{
+			header("Location: ./accueil.php");
+			exit();
+		}
+		else
+		{
+			$bdd=connexionBDD();
+			suppressionJoueurAdmin($bdd,$_GET['jou']);
+
+			header("Location: ./accueil.php");
+		}
 	}
 	else
 	{
-		$bdd=connexionBDD();
+		$bdd=connexionBDD();			
 		suppressionEquipeAdmin($bdd,$_GET['equ']);
 
 		header("Location: ./accueil.php");

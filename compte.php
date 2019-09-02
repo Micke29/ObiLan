@@ -10,35 +10,55 @@
 		exit();
 	}
 
-	$bdd=connexionBDD();
-	$compte=compte($bdd,$_SESSION['pseudo']);
-	$total=0;
-
-	while($resultatCompte=$compte->fetch_assoc())
+	if(isset($_SESSION['formulaire']))
 	{
-		$id=$resultatCompte['jou_id'];
-		$email=$resultatCompte['cpt_mail'];
-		$equipe=$resultatCompte['equ_nom'];
-		$telephone=$resultatCompte['jou_telephone'];
+		echo '<script type="text/javascript">window.alert("Merci de remplir le formulaire");</script>';
 
-		if($resultatCompte['piz_date']=="VM1") $pizzaVM1=$resultatCompte['piz_nom'];
-		if($resultatCompte['piz_date']=="VM2") $pizzaVM2=$resultatCompte['piz_nom'];
-		if($resultatCompte['piz_date']=="VM3") $pizzaVM3=$resultatCompte['piz_nom'];
-		if($resultatCompte['piz_date']=="VS1") $pizzaVS1=$resultatCompte['piz_nom'];
-		if($resultatCompte['piz_date']=="VS2") $pizzaVS2=$resultatCompte['piz_nom'];
-		if($resultatCompte['piz_date']=="VS3") $pizzaVS3=$resultatCompte['piz_nom'];
-		if($resultatCompte['piz_date']=="SM1") $pizzaSM1=$resultatCompte['piz_nom'];
-		if($resultatCompte['piz_date']=="SM2") $pizzaSM2=$resultatCompte['piz_nom'];
-		if($resultatCompte['piz_date']=="SM3") $pizzaSM3=$resultatCompte['piz_nom'];
-
-		$total=$total+$resultatCompte['piz_prix'];
+ 		unset($_SESSION['formulaire']);
 	}
 
+	if(isset($_SESSION['modif']))
+	{
+		if($_SESSION['modif']=="mdp")
+		{
+			echo '<script type="text/javascript">window.alert("Les 2 mots de passe sont différents");</script>';
 
+ 			unset($_SESSION['modif']);
+		}
+
+		if($_SESSION['modif']=="ok")
+		{
+			echo '<script type="text/javascript">window.alert("Modifiaction(s) effectuée(s) avec succès");</script>';
+
+ 			unset($_SESSION['modif']);
+		}
+	}
+
+	$bdd=connexionBDD();
+	$compteInfo=compteInfo($bdd,$_SESSION['pseudo']);
+	$comptePizza=comptePizza($bdd,$_SESSION['pseudo']);
+	$total=0.00;
+
+	while($resultatCompteInfo=$compteInfo->fetch_assoc())
+	{
+		$id=$resultatCompteInfo['jou_id'];
+		$email=$resultatCompteInfo['cpt_mail'];
+		$equipe=$resultatCompteInfo['equ_nom'];
+		$telephone=$resultatCompteInfo['jou_telephone'];
+
+		while($resultatComptePizza=$comptePizza->fetch_assoc())
+		{
+			if($resultatComptePizza['piz_date']=="VS1") $pizzaVS1=$resultatComptePizza['piz_nom'];
+			if($resultatComptePizza['piz_date']=="VS2") $pizzaVS2=$resultatComptePizza['piz_nom'];
+			if($resultatComptePizza['piz_date']=="SM1") $pizzaSM1=$resultatComptePizza['piz_nom'];
+
+			$total=$total+$resultatComptePizza['piz_prix'];
+		}
+	}
 
 	if(isset($_GET['modif']))
 	{
-		if($_GET['modif']=="oui")
+		if($_GET['modif']=="compte" || $_GET['modif']=="pizza" || $_GET['modif']=="mdp")
 		{
 			$_SESSION['id']=$id;
 		}
@@ -51,7 +71,17 @@
 	<title>Compte</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="icon" type="icon/png" href="images/icone.png">
 	<link rel="stylesheet" type="text/css" href="./css/style.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+	<script type="text/javascript">
+		function supprimerEquipe(){
+			var r = confirm("Voulez-vous supprimer l'équipe ?");
+			if (r == true){
+				document.location.href="./config/config.supprimer.php?equ";
+			}
+		}
+	</script>
 </head>
 <body>
 	<?php
@@ -59,136 +89,119 @@
 
 		if(isset($_GET['modif']))
 		{
-			if($_GET['modif']=="oui")
+			if($_GET['modif']=="pizza")
 			{
 				$pizza1=pizza($bdd);
 				$pizza2=pizza($bdd);
 				$pizza3=pizza($bdd);
-				$pizza4=pizza($bdd);
-				$pizza5=pizza($bdd);
-				$pizza6=pizza($bdd);
-				$pizza7=pizza($bdd);
-				$pizza8=pizza($bdd);
-				$pizza9=pizza($bdd);
+
 				?>
 				<br>
 				<center>
 					<form method="post" action="./config/config.modificationPizza.php">
-						<label>Choisissez vos pizza (optionnel)</label><br />
-						<label>Pour le vendredi Midi :</label>
-							<select name="pizza_VM1">
-								<option value=""""></option>
+						<label>Choisissez vos pizza</label><br />
+
+						<label>Pour le vendredi Soir :</label>
+							<select name="pizza_VS1">
+								<option value="NULL"></option>
 							<?php
 								while($resultatPizza = $pizza1->fetch_assoc())
 								{
-									if($resultatPizza['piz_nom']==$pizzaVM1)	echo '<option value="'.$resultatPizza['piz_id'].'" selected>'.$resultatPizza['piz_nom'].' (&euro; '.$resultatPizza['piz_prix'].')</option>';
+									if($resultatPizza['piz_nom']==$pizzaVS1)	echo '<option value="'.$resultatPizza['piz_id'].'" selected>'.$resultatPizza['piz_nom'].' (&euro; '.$resultatPizza['piz_prix'].')</option>';
 									else echo '<option value="'.$resultatPizza['piz_id'].'">'.$resultatPizza['piz_nom'].' (&euro; '.$resultatPizza['piz_prix'].')</option>';
 								}
 								$pizza1->free();
 							?>
 							</select><br />
-						<label>Pour le vendredi Midi :</label>
-							<select name="pizza_VM2">
-								<option value=""""></option>
+						<label>Pour le vendredi Soir :</label>
+							<select name="pizza_VS2">
+								<option value="NULL"></option>
 							<?php
 								while($resultatPizza = $pizza2->fetch_assoc())
 								{
-									if($resultatPizza['piz_nom']==$pizzaVM2)	echo '<option value="'.$resultatPizza['piz_id'].'" selected>'.$resultatPizza['piz_nom'].' (&euro; '.$resultatPizza['piz_prix'].')</option>';
+									if($resultatPizza['piz_nom']==$pizzaVS2)	echo '<option value="'.$resultatPizza['piz_id'].'" selected>'.$resultatPizza['piz_nom'].' (&euro; '.$resultatPizza['piz_prix'].')</option>';
 									else echo '<option value="'.$resultatPizza['piz_id'].'">'.$resultatPizza['piz_nom'].' (&euro; '.$resultatPizza['piz_prix'].')</option>';
 								}
 								$pizza2->free();
 							?>
 							</select><br />
-						<label>Pour le vendredi Midi :</label>
-							<select name="pizza_VM3">
-								<option value=""""></option>
-							<?php
-								while($resultatPizza = $pizza3->fetch_assoc())
-								{
-									if($resultatPizza['piz_nom']==$pizzaVM3)	echo '<option value="'.$resultatPizza['piz_id'].'" selected>'.$resultatPizza['piz_nom'].' (&euro; '.$resultatPizza['piz_prix'].')</option>';
-									else echo '<option value="'.$resultatPizza['piz_id'].'">'.$resultatPizza['piz_nom'].' (&euro; '.$resultatPizza['piz_prix'].')</option>';
-								}
-								$pizza3->free();
-							?>
-							</select><br />
-
-						<label>Pour le vendredi Soir :</label>
-							<select name="pizza_VS1">
-								<option value=""""></option>
-							<?php
-								while($resultatPizza = $pizza4->fetch_assoc())
-								{
-									if($resultatPizza['piz_nom']==$pizzaVS1)	echo '<option value="'.$resultatPizza['piz_id'].'" selected>'.$resultatPizza['piz_nom'].' (&euro; '.$resultatPizza['piz_prix'].')</option>';
-									else echo '<option value="'.$resultatPizza['piz_id'].'">'.$resultatPizza['piz_nom'].' (&euro; '.$resultatPizza['piz_prix'].')</option>';
-								}
-								$pizza4->free();
-							?>
-							</select><br />
-						<label>Pour le vendredi Soir :</label>
-							<select name="pizza_VS2">
-								<option value=""""></option>
-							<?php
-								while($resultatPizza = $pizza5->fetch_assoc())
-								{
-									if($resultatPizza['piz_nom']==$pizzaVS2)	echo '<option value="'.$resultatPizza['piz_id'].'" selected>'.$resultatPizza['piz_nom'].' (&euro; '.$resultatPizza['piz_prix'].')</option>';
-									else echo '<option value="'.$resultatPizza['piz_id'].'">'.$resultatPizza['piz_nom'].' (&euro; '.$resultatPizza['piz_prix'].')</option>';
-								}
-								$pizza5->free();
-							?>
-							</select><br />
-						<label>Pour le vendredi Soir :</label>
-							<select name="pizza_VS3">
-								<option value=""""></option>
-							<?php
-								while($resultatPizza = $pizza6->fetch_assoc())
-								{
-									if($resultatPizza['piz_nom']==$pizzaVS3)	echo '<option value="'.$resultatPizza['piz_id'].'" selected>'.$resultatPizza['piz_nom'].' (&euro; '.$resultatPizza['piz_prix'].')</option>';
-									else echo '<option value="'.$resultatPizza['piz_id'].'">'.$resultatPizza['piz_nom'].' (&euro; '.$resultatPizza['piz_prix'].')</option>';
-								}
-								$pizza6->free();
-							?>
-							</select><br />
 
 						<label>Pour le samedi :</label>
 							<select name="pizza_SM1">
-								<option value=""""></option>
+								<option value="NULL"></option>
 							<?php
-								while($resultatPizza = $pizza7->fetch_assoc())
+								while($resultatPizza = $pizza3->fetch_assoc())
 								{
 									if($resultatPizza['piz_nom']==$pizzaSM1)	echo '<option value="'.$resultatPizza['piz_id'].'" selected>'.$resultatPizza['piz_nom'].' (&euro; '.$resultatPizza['piz_prix'].')</option>';
 									else echo '<option value="'.$resultatPizza['piz_id'].'">'.$resultatPizza['piz_nom'].' (&euro; '.$resultatPizza['piz_prix'].')</option>';
 								}
-								$pizza7->free();
-							?>
-							</select><br>
-						<label>Pour le samedi :</label>
-							<select name="pizza_SM2">
-								<option value=""""></option>
-							<?php
-								while($resultatPizza = $pizza8->fetch_assoc())
-								{
-									if($resultatPizza['piz_nom']==$pizzaSM2)	echo '<option value="'.$resultatPizza['piz_id'].'" selected>'.$resultatPizza['piz_nom'].' (&euro; '.$resultatPizza['piz_prix'].')</option>';
-									else echo '<option value="'.$resultatPizza['piz_id'].'">'.$resultatPizza['piz_nom'].' (&euro; '.$resultatPizza['piz_prix'].')</option>';
-								}
-								$pizza8->free();
-							?>
-							</select><br>
-						<label>Pour le samedi :</label>
-							<select name="pizza_SM3">
-								<option value=""""></option>
-							<?php
-								while($resultatPizza = $pizza9->fetch_assoc())
-								{
-									if($resultatPizza['piz_nom']==$pizzaSM3)	echo '<option value="'.$resultatPizza['piz_id'].'" selected>'.$resultatPizza['piz_nom'].' (&euro; '.$resultatPizza['piz_prix'].')</option>';
-									else echo '<option value="'.$resultatPizza['piz_id'].'">'.$resultatPizza['piz_nom'].' (&euro; '.$resultatPizza['piz_prix'].')</option>';
-								}
-								$pizza9->free();
+								$pizza3->free();
 							?>
 							</select><br><br>
 
-						<label><input type="submit" value="Valider"></label><br />
+						<label class="submit"><input type="submit" value="Valider"></label><br />
 					</form>
 				</center>
+				<?php
+			}
+			elseif($_GET['modif']=="compte")
+			{
+				?>
+				<form method="post" action="config/config.modificationCompte.php">
+					<label>Equipe</label>
+					<select name="equipe">
+					<?php
+						$limiteHS=limiteHS($bdd);
+						$jeux=jeux($bdd);
+
+						while($resultatJeux = $jeux->fetch_assoc())
+						{
+							if($resultatJeux['jeu_nom'] == "Hearthstone" && $limiteHS < 16 || $resultatJeux['jeu_nom'] != "Hearthstone")
+							{
+								echo '<optgroup label="'.$resultatJeux['jeu_nom'].'">';
+								$equipes=equipes($bdd);
+
+								while($resultatEquipes = $equipes->fetch_assoc())
+								{
+									if($resultatJeux['jeu_id'] == $resultatEquipes['jeu_id'])
+									{
+										if($resultatEquipes['equ_nom'] == $equipe) echo '<option value="'.$resultatEquipes['equ_id'].'" selected>'.$resultatEquipes['equ_nom'].'</option>';
+										else echo '<option value="'.$resultatEquipes['equ_id'].'">'.$resultatEquipes['equ_nom'].'</option>';
+									}
+								}
+
+								$equipes->free();
+								echo '</optgroup>';
+							}
+						}
+						$jeux->free();
+					?>
+					</select>
+
+					<label>Email</label>
+					<?php echo '<input type="email" name="email" value="'.$email.'" required="required">'; ?>
+					
+					<label>Téléphone</label>
+					<?php echo '<input type="tel" pattern="^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$" name="tel" placeholder="0601020304" value="'.$telephone.'" title="votre numéro de téléphone" required="required">'; ?>
+				<div class="submit">
+					<input type="submit" value="Valider">
+				</div>
+			</form>
+				<?php
+			}
+			elseif($_GET['modif']=="mdp")
+			{
+				?>
+				<form method="post" action="config/config.modificationMdp.php">
+					<label>Nouveau Mot de Passe</label>
+					<input type="password" name="mdp" title="Nouveau Mot de Passe">
+
+					<label>Répétez votre Mot de Passe</label>
+					<input type="password" name="mdp_verif" title="Nouveau Mot de Passe">
+				<div class="submit">
+					<input type="submit" value="Valider">
+				</div>
+				</form>
 				<?php
 			}
 			else
@@ -202,34 +215,88 @@
 			?>
 	<center>
 		<h2>Info :</h2>
+		<?php
+			if(isset($_SESSION['poste']))
+			{
+				if($_SESSION['poste']=="capitaine")
+				{
+					?>
+					<table id="compte">
+						<thead>
+							<tr>
+								<th>Pseudo</th>
+								<th>Date d'inscription</th>
+								<th colspan="2">Action</th>
+							</tr>
+						</thead>
+						
+						<tbody>
+					<?php
+					$equipeCapitaine=equipeCapitaine($bdd,$_SESSION['pseudo']);
+					while($donnees=$equipeCapitaine->fetch_assoc())
+					{
+					?>
+						<tr>
+							<td><?php echo $donnees['cpt_pseudo'] ?></td>
+							<td><?php echo $donnees['cpt_date'] ?></td>
+							<?php
+							if($donnees['jou_capitaine']=="0")
+							{
+								?>
+								<td><a href="./config/config.promotion.php?cpt=<?php echo $donnees['cpt_pseudo'] ?>" title="promouvoir capitaine"><i class="fas fa-edit"></i></a></td>
+								<?php
+							}
+							if($donnees['cpt_pseudo'] != $_SESSION['pseudo'])
+							{
+								?>
+									<td><a href="./config/config.supprimer.php?jou=<?php echo $donnees['cpt_pseudo'] ?>" title="exclure"><i class="fas fa-times-circle"></i></a></td>
+								<?php
+							}
+							?>
+						</tr>
+					<?php
+					}
+					?>
+						</tbody>
+					</table>
+
+					<div class="submit">
+						<input type="submit" value="Supprimer Equipe" onclick="supprimerEquipe()">
+					</div>
+					<?php				
+				}
+			}
+		?>
 		<p>Equipe : <?php echo $equipe ?></p>
 		<p>Email : <?php echo $email ?></p>
 		<p>Téléphone : <?php echo $telephone ?></p>
+		
+		<a class="submit" href="./compte.php?modif=compte"><input type="submit" value="Modification Compte"></a>
+		<a class="submit" href="./compte.php?modif=mdp"><input type="submit" value="Modification Mot de Passe"></a>
+		<?php
+			if(!isset($_SESSION['poste']))
+			{
+				?>
+					<a class="submit" href="./config/config.supprimer.php?cpt=<?php echo $_SESSION['pseudo'] ?>"><input type="submit" value="Suppression Compte"></a>
+				<?php
+			}
+		?>
 
 		<h2>Pizza :</h2>
-		<h3>Vendredi Midi :</h3>
-			<?php 
-			if($pizzaVM1 != "") echo $pizzaVM1.'<br>';
-			if($pizzaVM2 != "") echo $pizzaVM2.'<br>'; 
-			if($pizzaVM3 != "") echo $pizzaVM3.'<br>';
-			?>
 		<h3>Vendredi Soir :</h3>
 			<?php
 			if($pizzaVS1 != "") echo $pizzaVS1.'<br>'; 
 			if($pizzaVS2 != "") echo $pizzaVS2.'<br>'; 
-			if($pizzaVS3 != "") echo $pizzaVS3.'<br>';
 			?>
 		<h3>Samedi Midi :</h3>
 			<?php
 			if($pizzaSM1 != "") echo $pizzaSM1.'<br>';
-			if($pizzaSM2 != "") echo $pizzaSM2.'<br>';
-			if($pizzaSM3 != "") echo $pizzaSM3.'<br>';
 			?>
 
-		<h2>Total (pizza + inscription) :</h2>
-		<p>&euro; <?php echo $total+5.00 ?></p>
+		<h2>Total (sans l'inscription) :</h2>
+		<p>&euro; <?php echo $total ?></p>
 
-		<a class="button" href="./compte.php?modif=oui"><input type="submit" value="Modification pizza"></a>
+		<a class="submit" href="./compte.php?modif=pizza"><input type="submit" value="Modification pizza" style="margin-bottom: 15px"></a>
 	</center>
 	<?php
 		}

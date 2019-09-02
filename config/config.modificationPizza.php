@@ -7,17 +7,19 @@
 
 	if(isset($_SESSION['id']))
 	{
-		$_POST['pizza_VM']=$idPizza_VM;
-		$_POST['pizza_VS']=$idPizza_VS;
-		$_POST['pizza_SM']=$idPizza_SM;
-		$_SESSION['id']=$idJoueur;
+		$idPizza_VS1=$_POST['pizza_VS1'];
+		$idPizza_VS2=$_POST['pizza_VS2'];
+		$idPizza_SM1=$_POST['pizza_SM1'];
+		$idJoueur=$_SESSION['id'];
 
 		unset($_SESSION['id']);
 
 		$bdd=connexionBDD();
 
 		Norvegienne($bdd,$idJoueur);
-		$resultat=ajoutPizza($bdd,$idJoueur,$idPizza_VM,$idPizza_VS,$idPizza_SM);
+		$resultat=ajoutPizza($bdd,$idJoueur,$idPizza_VS1,$idPizza_VS2,$idPizza_SM1);
+
+		if($resultat == 0) $_SESSION['modif']="ok";
 
 		$bdd->close();
 	}

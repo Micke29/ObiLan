@@ -32,6 +32,18 @@
 	}
 	else
 	{
+		$requete=$bdd->query("SELECT `jou_capitaine` FROM `t_joueur_jou` NATURAL JOIN `t_compte_cpt` WHERE `cpt_pseudo`=\"$username\";");
+		while($row=$requete->fetch_assoc())
+		{
+			$statut=$row['jou_capitaine'];
+		}
+		$requete->free();
+
+		if($statut==1)
+		{
+			$_SESSION['poste']="capitaine";
+		}
+
 		$_SESSION['pseudo']=$username;
 						
 		$username="";

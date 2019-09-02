@@ -2,12 +2,12 @@
 	
 	function affichageErreur()
 	{
-		//error_reporting(0); 	//LE DECOMMENTER UNE FOIS EN LIGNE
+		//error_reporting(0); 	//LE COMMENTER EN PROD
 	}
 
 	function connexionBDD()
 	{
-		$bdd = new mysqli('localhost', 'root', 'root', 'obilan');
+		$bdd = new mysqli('localhost', 'obi1', 'gEstionnaire_OBI1', 'obilan');
 
 		if ($bdd->connect_errno) 
 		{
@@ -34,6 +34,21 @@
 		return $bdd->query("SELECT * FROM `t_jeu_jeu`;");
 	}
 
+	function limiteLOL($bdd)
+	{
+		return $bdd->query("SELECT COUNT(`equ_id`) AS nombre FROM `t_equipe_equ` NATURAL JOIN `t_joint_equ_jeu` NATURAL JOIN `t_jeu_jeu` WHERE `jeu_nom` = \"League of Legends\";");
+	}
+
+	function limiteCS($bdd)
+	{
+		return $bdd->query("SELECT COUNT(`equ_id`) AS nombre FROM `t_equipe_equ` NATURAL JOIN `t_joint_equ_jeu` NATURAL JOIN `t_jeu_jeu` WHERE `jeu_nom` = \"Counter-Strike\";");
+	}
+
+	function limiteHS($bdd)
+	{
+		return $bdd->query("SELECT COUNT(`equ_id`) AS nombre FROM `t_joueur_jou` NATURAL JOIN `t_equipe_equ` WHERE `equ_nom` = \"Hearthstone\";");
+	}
+
 	function pizza($bdd)
 	{
 		return $bdd->query("SELECT * FROM `t_pizza_piz`;");
@@ -41,7 +56,7 @@
 
 	function equipes($bdd)
 	{
-		return $bdd->query("SELECT * FROM `t_equipe_equ` NATURAL JOIN `t_joint_equ_jeu` NATURAL JOIN `t_jeu_jeu` ORDER BY `jeu_nom`;");
+		return $bdd->query("SELECT * FROM `t_equipe_equ` NATURAL JOIN `t_joint_equ_jeu` NATURAL JOIN `t_jeu_jeu` ORDER BY `jeu_id`;");
 	}
 
 	function joueurs($bdd)
@@ -54,9 +69,14 @@
 		return $bdd->query("SELECT * FROM `t_joueur_jou` NATURAL JOIN `t_compte_cpt` WHERE `jou_nom` = \"$nom\" AND `jou_prenom` = \"$prenom\" OR `cpt_pseudo` = \"$pseudo\";");
 	}
 
-	function compte($bdd,$pseudo)
+	function compteInfo($bdd,$pseudo)
 	{
-		return $bdd->query("SELECT `jou_id`, `cpt_mail`, `equ_nom`, `jou_telephone`, `piz_nom`, `piz_date`, `piz_prix` FROM `t_compte_cpt` NATURAL JOIN `t_equipe_equ` NATURAL JOIN `t_joueur_jou` NATURAL JOIN `t_joint_piz_jou` NATURAL JOIN `t_pizza_piz` WHERE `cpt_pseudo` = \"$pseudo\";");
+		return $bdd->query("SELECT `jou_id`, `cpt_mail`, `equ_nom`, `jou_telephone` FROM `t_compte_cpt` NATURAL JOIN `t_equipe_equ` NATURAL JOIN `t_joueur_jou` WHERE `cpt_pseudo` = \"$pseudo\";");
+	}
+
+	function comptePizza($bdd,$pseudo)
+	{
+		return $bdd->query("SELECT `jou_id`, `piz_nom`, `piz_date`, `piz_prix` FROM `t_compte_cpt` NATURAL JOIN `t_joueur_jou` NATURAL JOIN `t_joint_piz_jou` NATURAL JOIN `t_pizza_piz` WHERE `cpt_pseudo` = \"$pseudo\";");
 	}
 
 	function ajoutEquipe($bdd, $equipe, $acronyme, $jeu)
@@ -140,6 +160,17 @@
 
 		return $resultat;
 	}
+	
+	function modificationCompteJoueur($bdd, $pseudo, $id, $mail, $tel, $equipe)
+	{
+		$bdd->query("UPDATE `t_compte_cpt` SET `cpt_mail` = \"$mail\" WHERE `cpt_pseudo` = \"$pseudo\";");
+		$bdd->query("UPDATE `t_joueur_jou` SET `jou_telephone` = \"$tel\", `equ_id` = \"$equipe\" WHERE `jou_id` = \"$id\";");
+	}
+
+	function modificationMdp($bdd, $pseudo, $mdp)
+	{
+		$bdd->query("UPDATE `t_compte_cpt` SET `cpt_mdp` = \"$mdp\" WHERE `cpt_pseudo` = \"$pseudo\";");
+	}
 
 	function suppressionJoueur($bdd, $pseudo)
 	{
@@ -172,31 +203,13 @@
 
 	}
 
-	function ajoutPizza($bdd, $idJoueur, $idPizza_VM1, $idPizza_VM2, $idPizza_VM3, $idPizza_VS1, $idPizza_VS2, $idPizza_VS3, $idPizza_SM1, $idPizza_SM2, $idPizza_SM3)
+	function ajoutPizza($bdd, $idJoueur, $idPizza_VS1, $idPizza_VS2, $idPizza_SM1)
 	{
 		$compt=0;
 		$resultat=0;	
 
-		while($resultat != 1 && $compt < 9)
+		while($resultat != 1 && $compt < 3)
 		{
-			if($idPizza_VM1 == "NULL") $compt++;
-			else
-			{
-				if($ajout=$bdd->query("INSERT INTO `t_joint_piz_jou` (jou_id,piz_id,piz_date) VALUES (\"$idJoueur\",\"$idPizza_VM1\",'VM1');")) $compt++;
-				else $resultat=1;
-			}
-			if($idPizza_VM2 == "NULL") $compt++;
-			else
-			{
-				if($ajout=$bdd->query("INSERT INTO `t_joint_piz_jou` (jou_id,piz_id,piz_date) VALUES (\"$idJoueur\",\"$idPizza_VM2\",'VM2');")) $compt++;
-				else $resultat=1;
-			}
-			if($idPizza_VM3 == "NULL") $compt++;
-			else
-			{
-				if($ajout=$bdd->query("INSERT INTO `t_joint_piz_jou` (jou_id,piz_id,piz_date) VALUES (\"$idJoueur\",\"$idPizza_VM3\",'VM3');")) $compt++;
-				else $resultat=1;
-			}
 
 			if($idPizza_VS1 == "NULL") $compt++;
 			else
@@ -210,29 +223,10 @@
 				if($ajout=$bdd->query("INSERT INTO `t_joint_piz_jou` (jou_id,piz_id,piz_date) VALUES (\"$idJoueur\",\"$idPizza_VS2\",'VS2');")) $compt++;
 				else $resultat=1;
 			}
-			if($idPizza_VS3 == "NULL") $compt++;
-			else
-			{
-				if($ajout=$bdd->query("INSERT INTO `t_joint_piz_jou` (jou_id,piz_id,piz_date) VALUES (\"$idJoueur\",\"$idPizza_VS3\",'VS3');")) $compt++;
-				else $resultat=1;
-			}
-
 			if($idPizza_SM1 == "NULL") $compt++;
 			else
 			{
 				if($ajout=$bdd->query("INSERT INTO `t_joint_piz_jou` (jou_id,piz_id,piz_date) VALUES (\"$idJoueur\",\"$idPizza_SM1\",'SM1');")) $compt++;
-				else $resultat=1;
-			}
-			if($idPizza_SM2 == "NULL") $compt++;
-			else
-			{
-				if($ajout=$bdd->query("INSERT INTO `t_joint_piz_jou` (jou_id,piz_id,piz_date) VALUES (\"$idJoueur\",\"$idPizza_SM2\",'SM2');")) $compt++;
-				else $resultat=1;
-			}
-			if($idPizza_SM3 == "NULL") $compt++;
-			else
-			{
-				if($ajout=$bdd->query("INSERT INTO `t_joint_piz_jou` (jou_id,piz_id,piz_date) VALUES (\"$idJoueur\",\"$idPizza_SM3\",'SM3');")) $compt++;
 				else $resultat=1;
 			}
 		}
@@ -244,50 +238,63 @@
 		$bdd->query("DELETE FROM `t_joint_piz_jou` WHERE `jou_id` = \"$idJoueur\";");
 	}
 
+	function equipeCapitaine($bdd, $pseudo)
+	{
+		$idEquipeResult=$bdd->query("SELECT `equ_id` FROM `t_joueur_jou` NATURAL JOIN `t_compte_cpt` WHERE `cpt_pseudo` = \"$pseudo\";");
+		while ($row = $idEquipeResult->fetch_assoc()) 
+		{
+			$idEquipe = $row["equ_id"];
+		}
+		$idEquipeResult->free();
+
+		return $bdd->query("SELECT * FROM `t_compte_cpt` NATURAL JOIN `t_joueur_jou` WHERE `equ_id` = \"$idEquipe\";");
+	}
+
 	function joueurAdmin($bdd)
 	{
-		return $bdd->query("SELECT * FROM `t_joueur_jou` NATURAL JOIN `t_compte_cpt`;");
+		return $bdd->query("SELECT * FROM `t_joueur_jou` NATURAL JOIN `t_compte_cpt` ORDER BY `jou_nom` ASC;");
 	}
 
 	function equipesIncompletesAdmin($bdd)
 	{
-		return $bdd->query("SELECT `equ_id`, `equ_nom`, COUNT(`jou_id`) AS nombre FROM `t_equipe_equ` NATURAL JOIN `t_joueur_jou` GROUP BY `equ_id` HAVING COUNT(`jou_id`) < 5;");
+		return $bdd->query("SELECT `equ_id`, `equ_nom`, `jeu_nom`, COUNT(`jou_id`) AS nombre FROM `t_equipe_equ` NATURAL JOIN `t_joueur_jou` NATURAL JOIN `t_joint_equ_jeu` NATURAL JOIN `t_jeu_jeu` GROUP BY `equ_id` HAVING COUNT(`jou_id`) < 5;");
 	}
 
 	function equipesCompletesAdmin($bdd)
 	{
-		return $bdd->query("SELECT `equ_id`, `equ_nom`, COUNT(`jou_id`) AS nombre FROM `t_equipe_equ` NATURAL JOIN `t_joueur_jou` GROUP BY `equ_id` HAVING COUNT(`jou_id`) > 5;");
+		return $bdd->query("SELECT `equ_id`, `equ_nom`, `jeu_nom`, COUNT(`jou_id`) AS nombre FROM `t_equipe_equ` NATURAL JOIN `t_joueur_jou` NATURAL JOIN `t_joint_equ_jeu` NATURAL JOIN `t_jeu_jeu` GROUP BY `equ_id` HAVING COUNT(`jou_id`) >= 5;");
 	}
 
 	function suppressionEquipeAdmin($bdd, $idEquipe)
 	{
-		$bdd->query("DELETE
-					    `t_joueur_jou`,
-					    `t_compte_cpt`,
-					    `t_joint_piz_jou`,
-					    `t_joint_equ_jeu`,
-					    `t_equipe_equ`
-					FROM
-					    `t_joueur_jou`
-					INNER JOIN `t_compte_cpt` ON `t_joueur_jou`.`cpt_id` = `t_compte_cpt`.`cpt_id`
-					INNER JOIN `t_joint_piz_jou` ON `t_joueur_jou`.`jou_id` = `t_joint_piz_jou`.`jou_id`
-					INNER JOIN `t_joint_equ_jeu` ON `t_joueur_jou`.`equ_id` = `t_joint_equ_jeu`.`equ_id`
-					INNER JOIN `t_equipe_equ` ON `t_joueur_jou`.`equ_id` = `t_equipe_equ`.`equ_id`
-					WHERE
-					    `t_joueur_jou`.`equ_id` = \"$idEquipe\";");
+
+		$select=$bdd->query("SELECT `jou_id` FROM `t_joueur_jou` NATURAL JOIN `t_compte_cpt` WHERE `equ_id` = \"$idEquipe\";");
+		while($donnees = $select->fetch_assoc())
+		{
+			$id=$donnees["jou_id"];
+
+			$bdd->query("DELETE FROM `t_joint_piz_jou` WHERE `jou_id` = \"$id\";");
+			$bdd->query("DELETE FROM `t_joueur_jou` WHERE `jou_id` = \"$id\";");
+			$bdd->query("DELETE FROM `t_compte_cpt` WHERE `cpt_id` = \"$id\";");
+		}
+		$select->free();
+
+		$bdd->query("DELETE FROM `t_joint_equ_jeu` WHERE `equ_id` = \"$idEquipe\";");
+		$bdd->query("DELETE FROM `t_equipe_equ` WHERE `equ_id` = \"$idEquipe\";");
+    }
+
+    function suppressionJoueurAdmin($bdd,$idJoueur)
+    {
+    	$bdd->query("DELETE FROM `t_joint_piz_jou` WHERE `jou_id` = \"$idJoueur\";");
+		$bdd->query("DELETE FROM `t_joueur_jou` WHERE `jou_id` = \"$idJoueur\";");
+		$bdd->query("DELETE FROM `t_compte_cpt` WHERE `cpt_id` = \"$idJoueur\";");
     }
 
 	function pizzaAdmin($bdd)
 	{
-		$pizzaVM=selectionPizzaAdmin($bdd,"VM%");
 		$pizzaVS=selectionPizzaAdmin($bdd,"VS%");
 		$pizzaSM=selectionPizzaAdmin($bdd,"SM%");
 
-		echo "<h2>Vendredi Midi :</h2>";
-		while($donnees = $pizzaVM->fetch_assoc())
-		{
-			echo $donnees["piz_nom"]." : ".$donnees["total"]."<br />";
-		}
 		echo "<h2>Vendredi Soir :</h2>";
 		while($donnees = $pizzaVS->fetch_assoc())
 		{
@@ -305,13 +312,20 @@
 		return $bdd->query("SELECT `piz_nom`, COUNT(`piz_id`) total FROM `t_pizza_piz` NATURAL JOIN `t_joint_piz_jou` WHERE `piz_date` LIKE \"$date\" GROUP BY `piz_id`;");
 	}
 
+	function verifPizzaAdmin($bdd,$nom)
+	{
+		return $bdd->query("SELECT `jou_id`, `piz_nom`, `piz_date`, `piz_prix` FROM `t_joueur_jou` NATURAL JOIN `t_joint_piz_jou` NATURAL JOIN `t_pizza_piz` WHERE `jou_nom` LIKE \"$nom\";");
+	}
+
+	/*
 	function exportPizza($bdd,$date)
 	{
 		return $bdd->query("SELECT `jou_nom`, `jou_prenom`, `piz_nom` FROM `t_joueur_jou` NATURAL JOIN `t_joint_piz_jou` NATURAL JOIN `t_pizza_piz` WHERE `piz_date` LIKE \"$date\" ORDER BY `jou_nom` ASC;");
 	}
-
+	*/
+	
 	function exportJoueur($bdd)
 	{
-		return $bdd->query("SELECT `jou_nom`, `jou_prenom`, `jeu_nom`, `cpt_pseudo`, `equ_nom`, `jou_capitaine` FROM `t_joueur_jou` NATURAL JOIN `t_compte_cpt` NATURAL JOIN `t_jeu_jeu` NATURAL JOIN `t_joint_equ_jeu` NATURAL JOIN `t_equipe_equ` GROUP BY `equ_nom` ORDER BY `jeu_nom` ASC;");
+		return $bdd->query("SELECT `jou_nom`, `jou_prenom`, `jeu_nom`, `cpt_pseudo`, `equ_nom`, `jou_capitaine` FROM `t_joueur_jou` NATURAL JOIN `t_compte_cpt` NATURAL JOIN `t_jeu_jeu` NATURAL JOIN `t_joint_equ_jeu` NATURAL JOIN `t_equipe_equ` ORDER BY `jou_nom` ASC;");
 	}
 ?>

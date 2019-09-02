@@ -1,8 +1,6 @@
 INSTALLATION DU SITE
 	
 	Création de la base avec "creation_bdd_obilan.sql"
-	/!\ Supprimer le fichier de création après installation
-	/!\ Supprimer le fichier "MANUEL.txt"
 
 GESTION DES ERREURS A L'INSCRIPTION
 
@@ -17,6 +15,12 @@ PLUG-IN FB
 
 	/!\ Si protection contre le pistage activé sur le navigateur client, blocage du plug-in
 
-GESTION DES ERREURS 404, 500 et 504
+SUPPRESSION JOUEUR SANS EQUIPE
+	
+	Via l'interface admin
+	Ligne en rouge dans le tableau "joueur", cliquer sur l'icone au bout de ligne
 
-	Dans ".htaccess", remplacer /obilan/erreur/ (local) par /erreur/ (web) à la mise en ligne du site
+	Via la bdd
+	SET FOREIGN_KEY_CHECK = 0;
+	DELETE FROM `t_compte_cpt` NATURAL JOIN `t_joueur_jou` NATURAL JOIN `t_joint_piz_jou` WHERE `equ_id` = "0";
+	SET FOREIGN_KEY_CHECK = 1;

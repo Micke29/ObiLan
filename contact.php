@@ -40,6 +40,8 @@
 		<title>Contact</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="icon" type="icon/png" href="images/icone.png">
+		<link rel="stylesheet" type="text/css" href="./css/style.css">
 		<style>
 		    #map {
 		    	height: 400px;
@@ -52,8 +54,98 @@
 		<?php
 			include("./config/config.navbar.php");
 		?>
+		<br>	
 		<br>
-			<div id="map"></div>
+
+		<?php
+			$bdd=connexionBDD();
+			$jeux=jeux($bdd);
+
+			$_SESSION['mail_contact']="";
+		?>
+			<h1>Nous contacter</h1>
+	<div id="contact_mail">
+	<table>
+		<tr>
+			<td colspan="2" align="center"><h2>Par Mail</h2></td>
+			<form method="post" action="./config/config.mail.php">
+				<tr>
+					<td>
+						<label>Votre Email :</label>
+					</td>
+					<td>
+			    		<input type="email" name="email" placeholder="Votre email" required="required"><br>
+			    	</td>
+			    </tr>
+
+			    <tr>
+			    	<td>
+			    		<label>Choisissez votre jeu :</label>
+			    	</td>
+			    	<td>
+						<select name="jeu">
+						<?php
+							while($resultatJeux = $jeux->fetch_assoc())
+							{
+								echo '<option value="'.$resultatJeux['jeu_nom'].'">'.$resultatJeux['jeu_nom'].'</option>';
+							}
+						$jeux->free();
+						?>
+						<option value="Divers">Question Diverse</option>
+					</select><br>
+					</td>
+				</tr>
+				
+				<tr>
+					<td>
+						<label>Sujet :</label>
+					</td>
+					<td>
+			    		<input type="text" name="sujet" placeholder="Sujet" required="required"><br>
+			    	</td>
+			    </tr>
+
+			    <tr>
+			    	<td>
+			    		<label>Votre message :</label>
+			    	</td>
+			    	<td>
+			    		<textarea name="message" type="text" placeholder="Message" style="width: 300px; height: 120px;" required="required"></textarea><br>
+			    	</td>
+			    </tr>	
+			    <tr>
+			    	<td class="submit" colspan="2" align="center">
+			    		<input type="submit" value="Envoyer" style="width:20% !important;margin-top: 5px">
+					</td>
+				</tr>
+			</form>
+		</tr>
+	</table>
+	</div>
+
+	<div id="contact_courrier">
+		<table>
+			<tr>
+				<td align="center">
+					<h2>Par courrier</h2>
+				</td>
+			</tr>
+			<tr>
+				<td>	
+				<address>
+					Département Informatique<br>
+					U.F.R Sciences et Techniques<br>
+					Université de Bretagne Occidentale UBO 20, av Le Gorgeu C.S 93837<br>
+					29238 BREST Cedex 3
+				</address>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<br>	
+
+	<div id="map" style="padding-bottom: 50px;">
 			<script>
 				function initMap() {
 			    var uluru = {lat: 48.3992686, lng: -4.4980519};
@@ -190,53 +282,15 @@
 			    });
 			    }
 			</script>
-			<script async defer
-			    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC918nn3n8RDumMDjcjxdZ2-5yjvuFJxis&callback=initMap">
-			</script>
+	</div>
+	<script async defer
+	    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC918nn3n8RDumMDjcjxdZ2-5yjvuFJxis&callback=initMap">
+	</script>
 
-		<br>
-		<br>
+	<?php
+		include("./config/config.footer.php");
 
-		<?php
-			$bdd=connexionBDD();
-			$jeux=jeux($bdd);
-
-			$_SESSION['mail_contact'];
-		?>
-
-		<center>
-			<h2>Par Mail</h2>
-			<form method="post" action="./config/config.mail.php">
-				<label>Votre Email :</label>
-			    <input type="email" name="email" placeholder="Votre email" required="required"><br>
-			    <label>Choisissez votre jeu :</label>
-					<select name="jeu">
-					<?php
-						while($resultatJeux = $jeux->fetch_assoc())
-						{
-							echo '<option value="'.$resultatJeux['jeu_nom'].'">'.$resultatJeux['jeu_nom'].'</option>';
-						}
-						$jeux->free();
-					?>
-						<option value="Divers">Question Diverse</option>
-					</select><br>
-				<label>Sujet :</label>
-			    <input type="text" name="sujet" placeholder="Sujet" required="required"><br>
-			    <label>Votre message :</label>
-			    <textarea name="message" type="text" placeholder="Message" required="required"></textarea><br>
-			    <input type="submit" value="Envoyer">
-			</form>
-
-			<h2>Par courrier</h2>
-			<address>
-				Département Informatique<br>
-				U.F.R Sciences et Techniques<br>
-				Université de Bretagne Occidentale UBO 20, av Le Gorgeu C.S 93837<br>
-				29238 BREST Cedex 3
-			</address>
-		</center>
-		<?php
-			$bdd->close();
-		?>
+		$bdd->close();
+	?>
 	</body>
 </html>

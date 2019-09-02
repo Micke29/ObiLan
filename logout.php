@@ -2,7 +2,7 @@
 	session_start();
 	session_destroy();
 
-	unset($_SESSION["pseduo"]);
+	unset($_SESSION['pseudo']);
 
 	header("Location: ./");
 	exit();

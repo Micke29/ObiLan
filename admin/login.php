@@ -31,7 +31,6 @@
 	else
 	{
 
-		$_SESSION['pseudo']=$username;
 		$_SESSION['admin']=TRUE;
 						
 		$username="";

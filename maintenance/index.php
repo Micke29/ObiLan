@@ -3,7 +3,7 @@
  
 <head>
 
-<title>Acceuil</title>
+<title>Accueil</title>
 
 <meta name="description" content="Page maintenance en cours" />
 <meta charset="UTF-8" />

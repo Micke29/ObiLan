@@ -1,0 +1,186 @@
+body
+{
+    background-image: url(../images/background.png);
+    color: white;
+}
+
+h1, h2, h3
+{
+    text-align: center;
+    padding: 15px;
+}
+
+a
+{
+    text-decoration: none;
+    color: white;
+}
+
+a:hover
+{
+    font-weight: bold;
+}
+
+table
+{
+    text-align: center:;
+    width: auto;
+    margin: auto;
+}
+
+td
+{
+	padding-right: 6px;
+}
+
+#login-body{
+	margin: 0;
+	padding: 0;
+	background-size: cover;
+	font-family: sans-serif;
+}
+
+#login-box{
+    width: 320px;
+    height: 420px;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    box-sizing: border-box;
+    padding: 70px 30px;
+}
+
+#login-box h1{
+    margin: 0;
+    padding: 0 0 20px;
+    text-align: center;
+    font-size: 22px;
+}
+
+#login-box p{
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+}
+
+#login-box input{
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+#login-box input[type="text"], input[type="password"]{
+    border: none;
+    border-bottom: 1px solid #fff;
+    background: transparent;
+    outline: none;
+    height: 40px;
+    color: #fff;
+    font-size: 16px;
+}
+
+#login-box input[type="submit"]{
+    border: none;
+    outline: none;
+    height: 40px;
+    background: #B0232C;
+    color: #fff;
+    font-size: 18px;
+    border-radius: 20px;
+}
+
+#login-box input[type="submit"]:hover{
+    cursor: pointer;
+    background: #7e1118;
+    color: #000;
+}
+
+#avatar{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    position: absolute;
+    top: -50px;
+    left: calc(50% - 50px);
+}
+
+.logo
+{
+    width: 25%;
+}
+
+.header
+{
+    overflow: hidden;
+    padding: 20px 10px;
+}
+
+.header ul li, button
+{
+    color: white;    
+    background-color:#B0232C;
+    border-style: solid;
+    border-width: 2px;
+    border-color: black;   
+    padding: 10px;
+    margin: 5px;
+}
+
+.header ul li
+{
+    display:inline;
+    font-size: 20px;
+}
+
+button
+{
+    font-size: 18px;
+}
+
+button:hover
+{
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.submit
+{
+    text-align: center;
+    margin-top: 20px;
+}
+
+.submit input[type="submit"]
+{
+    background-color: #B0232C;
+    border: none;
+    color: white;
+    font-size: 16px;
+    width: 20%;
+    height: 40px;
+}
+
+.submit input[type="submit"]:hover
+{
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#equipes, #joueurs, #pizza, #result
+{
+    text-align: center;
+}
+
+.verif
+{
+    max-width: 350px;
+    margin: auto;
+    padding: 20px;
+}
+
+.verif input[type="search"]
+{
+    border-color: #B0232C;
+    border-width: 3px;
+}

@@ -11,7 +11,7 @@
 		{
 			unset($_SESSION['mail_contact']);
 
-			$mail = ""; // Déclaration de l'adresse de destination.
+			$mail = "association.obi1@gmail.com"; // Déclaration de l'adresse de destination.
 			$message_txt = htmlspecialchars(addslashes($_POST['message'])); // Déclaration du message au format texte
 		}
 		else

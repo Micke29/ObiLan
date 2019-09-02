@@ -7,9 +7,8 @@
 	if(isset($_GET["pizza"]))
 	{
 		header("Content-type: application/force-download");
-		if($_GET["pizza"]=="VM") header("Content-Disposition: attachment; filename=pizza_VendrediMidi.csv");
-		elseif ($_GET["pizza"]=="VS") header("Content-Disposition: attachment; filename=pizza_VendrediSoir.csv");
-		elseif ($_GET["pizza"]=="SM") header("Content-Disposition: attachment; filename=pizza_SamediMidi.csv");
+		if ($_GET["pizza"]=="VS") header("Content-Disposition: attachment; filename=pizza_VendrediSoir.ods");
+		elseif ($_GET["pizza"]=="SM") header("Content-Disposition: attachment; filename=pizza_SamediMidi.ods");
 
 		print ("Nom	"."Prénom	"."Pizza\n");
 
@@ -27,7 +26,7 @@
 	{
 
 		header("Content-type: application/force-download");
-		header("Content-Disposition: attachment; filename=tableau_joueurs/equipes.csv");
+		header("Content-Disposition: attachment; filename=tableau_joueurs/equipes.ods");
 
 		print ("Nom	"."Prénom	"."Jeu	"."Pseudo	"."Equipe	"."Capitaine\n");
 

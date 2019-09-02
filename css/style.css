@@ -1,7 +1,427 @@
-#login{
-	width:20%;
-	margin:auto;
+html
+{
+    height: 100%;
 }
-a.button{
+
+body
+{
+    /*background-image: url(../images/background.png);*/
+   /* background-color: blue !important;*/
+    height: 100%;
+    position: relative;
+    color: white;
+}
+
+h1, h3, h4
+{
+    text-align: center;    
+}
+
+h1, h3
+{
+    padding: 15px;
+}
+
+span
+{
+    font-weight: bold;
+}
+
+a
+{
 	text-decoration: none;
+	color: white;
+}
+
+a:hover
+{
+	font-weight: bold;
+}
+
+input[type="text"], input[type="password"], input[type="email"], input[type="tel"], select, textarea
+{
+    border-color: #B0232C;
+    border-width: 3px;
+}
+
+footer
+{
+    position: relative;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    float: left;
+    width: 100%;
+    margin-top: 120px;
+    text-align: center;
+    padding-top: 20px;
+}
+
+.header
+{
+    overflow: hidden;
+    padding: 20px 10px;
+}
+
+/* Le menu a droite (Inscription, Connexion)*/
+.header ul li
+{
+    display:inline;
+    background-color:#B0232C;
+    border-style: solid;
+    border-width: 2px;
+    border-color: black;
+    font-size: 20px;
+    padding: 10px;
+    margin: 5px;
+}
+
+/* Style the header links */
+.header a 
+{
+    text-align: center;
+    padding: 12px;
+}
+
+/* Style the logo link (notice that we set the same value of line-height and font-size to prevent the header to increase when the font gets bigger */
+.header a.logo {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+
+/*------------------------------------------------------------------------------------------------*/
+/* CSS inscription.php */
+
+.cont-conteneur
+{
+    text-align: center;
+}
+
+.conteneur
+{
+    display: inline-block;
+    text-align: center;
+    width: 45%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.conteneur p
+{
+    font-weight: bold;
+    font-size: 22px;
+}
+
+.conteneur i
+{
+    font-size: 64px;
+    color: #B0232C;
+    margin: 30px;
+}
+
+/* CAPTAIN */
+
+.captain
+{
+    float: left;
+}
+
+/* PLAYER */
+
+.player
+{
+    float: right;
+}
+
+/* COMMON PLAYER AND CAPTAIN*/
+
+.player, .captain
+{
+    width: 200px;
+    background-color: #B0232C;
+    border-style: solid;
+    border-width: 2px;
+    border-color: black;
+    font-size: 20px;
+    padding: 20px;
+}
+
+/*------------------------------------------------------------------------------------------------*/
+/* CSS inscription CAPTAIN / PLAYER */
+
+.inscription, .inscription-jeu, .inscription-pizza
+{
+    max-width: 350px;
+    margin: auto;
+    padding: 20px;
+}
+
+.inscription-pizza
+{
+    max-width: 400px;
+}
+
+.inscription p
+{
+    text-align: center;
+}
+
+.inscription-pizza i
+{
+    font-size: 26px;
+    color: #B0232C;
+}
+
+.submit
+{
+    text-align: center;
+    margin-top: 20px;
+}
+
+.submit input[type="submit"]
+{
+    background-color: #B0232C;
+    border: none;
+    color: white;
+    font-size: 18px;
+    width: 20%;
+    height: 40px;
+}
+
+.submit input[type="submit"]:hover
+{
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/*------------------------------------------------------------------------------------------------*/
+/* CSS pour le compte*/
+
+#compte tbody td i
+{
+    color: #B0232C;
+    font-size: 20px;
+}
+
+/*------------------------------------------------------------------------------------------------*/
+/* CSS pour le deuxième header(header2)*/
+
+.header-link
+{
+    background-color: #B0232C;
+    margin-top:10px;/*Hauteur qui le sépare du header 1*/
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    border-style: solid;
+    border-width: 2px;
+    border-color: black;
+    color: white;
+}
+
+/*Code pour les lien <a href=""> du header 2*/
+.header-link a
+{
+    font-size: 20px;
+    padding: 25px;
+}
+
+/*Positionnement du header 2*/
+
+/*Code pour les positionement des li*/
+.header-link ul li
+{
+    display:inline;
+    margin-left:20px;
+}
+
+.logo
+{
+	width: 25%;
+}
+
+
+#accueil
+{
+    width: 60%;
+    height: auto;
+    float: left;
+    margin-left: 2%;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+#facebook
+{
+    float: left;
+    margin-right : 2%;
+    margin-left:5%; 
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+
+#live
+{
+    float: left;
+    width: 60%;
+    margin-left: 2%;
+    margin-bottom: 50px;
+    margin-top: 5px;
+
+}
+
+#tchat
+{
+    float: left;
+    margin-right : 2%;
+    margin-left:5%; 
+    margin-bottom: 50px;
+    margin-top: 5px;
+}
+
+.reglement
+{
+    text-align: left;
+    font-size: 18px;
+}
+
+.reglement span
+{
+    font-weight: bold;
+}
+
+table
+{
+    margin-top: 50px;
+    width: auto;
+    margin: auto;
+}
+
+.contact_mail
+{
+   float: left;
+    width: 60%;
+    margin-left: 2%;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.contact_courrier
+{
+    float: left;
+    margin-right : 2%;
+    margin-left:5%; 
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+#contact_mail
+{
+    width: 100%;
+    height: auto;
+}
+
+#error_404
+{
+    font-size: 36px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#tournoi
+{
+    max-width: 350px;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+}
+
+#accueil a, #error_404 a, .reglement a
+{
+    color: #B0232C;
+}
+
+#login-body{
+    margin: 0;
+    padding: 0;
+    background-size: cover;
+    font-family: sans-serif;
+}
+
+#login-box{
+    width: 320px;
+    height: 420px;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    box-sizing: border-box;
+    padding: 70px 30px;
+}
+
+#login-box h1{
+    margin: 0;
+    padding: 0 0 20px;
+    text-align: center;
+    font-size: 22px;
+}
+
+#login-box p{
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+}
+
+#login-box input{
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+#login-box input[type="text"], input[type="password"]{
+    border: none;
+    border-bottom: 1px solid #fff;
+    background: transparent;
+    outline: none;
+    height: 40px;
+    color: #fff;
+    font-size: 16px;
+}
+
+#login-box input[type="submit"]{
+    border: none;
+    outline: none;
+    height: 40px;
+    background: #B0232C;
+    color: #fff;
+    font-size: 18px;
+    border-radius: 20px;
+}
+
+#login-box input[type="submit"]:hover{
+    cursor: pointer;
+    background: #7e1118;
+    color: #000;
+}
+
+/* ---------- FOOTER ---------- */
+
+.footer-link ul li
+{
+    display:inline;
+    margin-left:20px;
+    padding-bottom:  20px;
+    padding-top: 50px;
+    height: 60px;
+    width: 60px;
+}
+
+.footer-link
+{
+    bottom: 0px;
+    position: absolute;
+    width: 100%;
 }
