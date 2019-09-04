@@ -5,16 +5,15 @@ html
 
 body
 {
-    /*background-image: url(../images/background.png);*/
-   /* background-color: blue !important;*/
+    background-image: url(../images/background.png);
     height: 100%;
     position: relative;
-    color: white;
 }
 
 h1, h3, h4
 {
-    text-align: center;    
+    text-align: center; 
+    color: white;  
 }
 
 h1, h3

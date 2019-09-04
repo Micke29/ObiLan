@@ -13,23 +13,29 @@
 <body>
 		
 	<header>
-		<div class="header">
-			<img src="./images/logo.png" class="logo" width="20%"/ style="float: left;">
-			<ul class="nav justify-content-end">
-  				<li class="nav-item"><a class="nav-link" href="inscription.php">Inscription</a></li>
- 				 <li class="nav-item"><a class="nav-link" href="connexion.php">Connexion</a></li>
-			</ul>
-		</div>
+		<nav class="navbar navbar-expand-lg navbar-light" >
+  <a href="index.php"> <img src="./images/logo.png" alt="Logo Obilan" width="20%" /> </a>
 
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link text-white btn btn-danger mx-3" href="inscription.php">Inscription</a>
+      <a class="nav-item nav-link text-white btn btn-danger" href="connexion.php">Connexion</a>
+    </div>
+  </div>
+</nav>
 
 </header>
 
-</div>
-<div style="margin-top:5%; margin-bottom: 5%; background-color: green">
-<nav class="nav nav-pills nav-fill" style="background-color: red;">
-  <a class="nav-item nav-link" href="./">Accueil</a>
-  <a class="nav-item nav-link" href="reglement.php">Reglement</a>
-  <a class="nav-item nav-link" href="tournois.php">Tournois</a>
-  <a class="nav-item nav-link" href="contact.php">Contact</a>
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <a class="navbar-brand text-white" href="index.php">Accueil</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+  	<span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link text-white" href="reglement.php">Règlement</a>
+      <a class="nav-item nav-link text-white" href="tournois.php">Tournois</a>
+      <a class="nav-item nav-link text-white" href="contact.php">Contact</a>
+    </div>
+  </div>
 </nav>
-</div>

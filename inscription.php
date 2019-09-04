@@ -102,8 +102,6 @@
 			if(!isset($_GET['poste']))
 			{	
 				?>
-				<div class="cont-conteneur">
-					<div class="conteneur">
 						<p>
 							<i class="fas fa-exclamation-triangle"></i>
 							Inscription possible jusqu'au 12/10
