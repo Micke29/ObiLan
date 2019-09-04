@@ -1,17 +1,18 @@
 # ObiLan
 
 ## INSTALLATION DU SITE
-	
-Création de la base avec *creation\_bdd\_obilan.sql*
+
+Adapter */config/config.requeteSQL.php ligne 10* avec votre configuration
+Créer de la base avec */SQL/creation\_bdd\_obilan.sql*
 
 ## GESTION DES ERREURS A L'INSCRIPTION
 
-1. Renvoi sur la page d'inscription avec un pop up expliquant l'erreur
+1. Renvoi sur la page d'inscription avec un pop-up expliquant l'erreur
 2. Si erreur d'écriture dans la base, renvoi l'erreur exacte en console
 
 ## ENVOI DE MAIL
 
-**/!\ NE PAS CHANGER L'ORDRE DES DÉCLARATIONS /!\ **
+**/!\ NE PAS CHANGER L'ORDRE DES DÉCLARATIONS /!\\** 
 
 ## PLUG-IN FB
 
