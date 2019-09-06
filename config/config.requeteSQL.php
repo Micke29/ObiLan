@@ -7,7 +7,7 @@
 
 	function connexionBDD()
 	{
-		$bdd = new mysqli('localhost', 'obi1', 'gEstionnaire_OBI1', 'obilan');
+		$bdd = new mysqli('localhost', 'root', '', 'obilan');
 
 		if ($bdd->connect_errno) 
 		{

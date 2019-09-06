@@ -316,9 +316,9 @@
 							</div>
 						</form>
 					<?php
+					$bdd->close();
 			}
 			else header("Location: ./");
-			$bdd->close();
 		
 			include("./config/config.footer.php");
 		?>		
