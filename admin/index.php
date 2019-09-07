@@ -5,9 +5,9 @@
 		<title>Connexion</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="icon" href="http://www.obilan.net/images/login/favicon.ico" />
+		<link rel="icon" href="../images/login/favicon.ico" />
 		<link rel="stylesheet" type="text/css" href="../css/style_admin.css">
-		<link rel="stylesheet" type="text/css" href="http://www.obilan.net/css/style_admin.css">
+		<link rel="stylesheet" type="text/css" href="../css/style_admin.css">
 	</head>
 
 	<body id="login-body">
