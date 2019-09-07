@@ -2,8 +2,8 @@
 
 ## INSTALLATION DU SITE
 
-Adapter */config/config.requeteSQL.php ligne 10* avec votre configuration
-Créer de la base avec */SQL/creation\_bdd\_obilan.sql*
+1. Adapter */config/config.requeteSQL.php ligne 10* avec votre configuration
+2. Créer de la base avec */SQL/creation\_bdd\_obilan.sql*
 
 ## GESTION DES ERREURS A L'INSCRIPTION
 
