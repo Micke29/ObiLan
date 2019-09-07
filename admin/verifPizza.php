@@ -41,7 +41,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<link rel="icon" type="icon/png" href="../images/icone.png" />
 	<link rel="stylesheet" type="text/css" href="../css/style_admin.css">
-	<link rel="stylesheet" type="text/css" href="../css/style_admin.css">
 </head>
 <body>
 	<div class="header">
