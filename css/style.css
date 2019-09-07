@@ -8,12 +8,12 @@ body
     background-image: url(../images/background.png);
     height: 100%;
     position: relative;
+    color: white;
 }
 
 h1, h3, h4
 {
-    text-align: center; 
-    color: white;  
+    text-align: center;    
 }
 
 h1, h3
@@ -197,7 +197,17 @@ footer
 /*------------------------------------------------------------------------------------------------*/
 /* CSS pour le compte*/
 
-#compte tbody td i
+.info
+{
+    padding-right: 18px;
+}
+
+#compte tr
+{
+    text-align: center;
+}
+
+#compte i
 {
     color: #B0232C;
     font-size: 20px;
@@ -380,7 +390,7 @@ table
     margin-bottom: 20px;
 }
 
-#login-box input[type="text"], input[type="password"]{
+#login-box input[type="text"], #login-box input[type="password"]{
     border: none;
     border-bottom: 1px solid #fff;
     background: transparent;

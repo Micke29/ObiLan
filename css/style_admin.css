@@ -23,14 +23,20 @@ a:hover
 
 table
 {
-    text-align: center;
+    text-align: center:;
     width: auto;
     margin: auto;
 }
 
-td
+th, td
 {
-	padding-right: 6px;
+	padding-right: 18px;
+}
+
+i
+{
+    color: #B0232C;
+    font-size: 20px;
 }
 
 #login-body{

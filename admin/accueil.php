@@ -20,7 +20,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<link rel="icon" type="icon/png" href="http://www.obilan.net/images/icone.png" />
 	<link rel="stylesheet" type="text/css" href="../css/style_admin.css">
-	<link rel="stylesheet" type="text/css" href="http://www.obilan.net/css/admin_style.css">
+	<link rel="stylesheet" type="text/css" href="http://www.obilan.net/css/style_admin.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
 </head>
 
 <body>
@@ -59,7 +60,7 @@
 					<td><?php echo $donnees['equ_nom'] ?></td>
 					<td><?php echo $donnees['jeu_nom'] ?></td>
 					<td><?php echo $donnees['nombre'] ?></td>
-					<td><?php echo '<a href="supprimer.php?equ='.$donnees['equ_id'].'"><img src="http://www.obilan.net/images/supprimer.ico" height="25" width="25" title="supprimer"/></a>' ?></td>
+					<td><?php echo '<a href="supprimer.php?equ='.$donnees['equ_id'].'"><i class="fas fa-times-circle"></i></a>' ?></td>
 				</tr>			
 		<?php
 		}
@@ -73,7 +74,7 @@
 				<tr>
 					<th>Equipe</th>
 					<th>Jeu</th>
-					<th>Membre(s)</th>
+					<th>Membres</th>
 					<th>Action</th>
 				</tr>
 			</thead>
@@ -87,7 +88,7 @@
 					<td><?php echo $donnees['equ_nom'] ?></td>
 					<td><?php echo $donnees['jeu_nom'] ?></td>
 					<td><?php echo $donnees['nombre'] ?></td>
-					<td><?php echo '<a href="supprimer.php?equ='.$donnees['equ_id'].'"><img src="http://www.obilan.net/images/supprimer.ico" height="25" width="25" title="supprimer"/></a>' ?></td>
+					<td><?php echo '<a href="supprimer.php?equ='.$donnees['equ_id'].'"><i class="fas fa-times-circle"></i></a>' ?></td>
 				</tr>			
 		<?php
 		}
@@ -128,7 +129,7 @@
 					<td style="color: #B0232C"><?php echo $donnees['jou_prenom'] ?></td>
 					<td style="color: #B0232C"><?php echo $donnees['jou_telephone'] ?></td>
 					<td style="color: #B0232C"><?php echo $donnees['cpt_mail'] ?></td>
-					<td><?php echo '<a href="supprimer.php?jou='.$donnees['jou_id'].'"><img src="http://www.obilan.net/images/supprimer.ico" height="25" width="25" title="supprimer"/></a>' ?></td>
+					<td><?php echo '<a href="supprimer.php?jou='.$donnees['jou_id'].'"><i class="fas fa-times-circle"></i></a>' ?></td>
 				</tr>			
 			<?php
 			}
@@ -140,7 +141,7 @@
 					<td><?php echo $donnees['jou_prenom'] ?></td>
 					<td><?php echo $donnees['jou_telephone'] ?></td>
 					<td><?php echo $donnees['cpt_mail'] ?></td>
-					<td><?php echo '<a href="supprimer.php?jou='.$donnees['jou_id'].'"><img src="http://www.obilan.net/images/supprimer.ico" height="25" width="25" title="supprimer"/></a>' ?></td>
+					<td><?php echo '<a href="supprimer.php?jou='.$donnees['jou_id'].'"><i class="fas fa-times-circle"></i></a>' ?></td>
 				</tr>			
 			<?php
 			}
@@ -154,11 +155,12 @@
 		<h1>Pizza</h1>
 		<?php
 			pizzaAdmin($bdd);	//affichage du total de chaque pizza par jour
-		
-		/*<h2>Export</h2>
-		<a class="button" href="./export.php?pizza=VS"><input type="submit" value="Vendredi Soir"></a>
-		<a class="button" href="./export.php?pizza=SM"><input type="submit" value="Samedi Midi"></a>*/
-		
+		?>
+		<h2>Export</h2>
+		<div class="submit">
+			<a href="./export.php?pizza=VS"><input type="submit" value="Vendredi Soir"></a>
+		</div>
+		<?php
 			$bdd->close();
 		?>
 	</div>

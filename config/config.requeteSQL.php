@@ -2,12 +2,12 @@
 	
 	function affichageErreur()
 	{
-		//error_reporting(0); 	//LE COMMENTER EN PROD
+		error_reporting(0); 	//LE COMMENTER EN PROD
 	}
 
 	function connexionBDD()
 	{
-		$bdd = new mysqli('localhost', 'root', '', 'obilan');
+		$bdd = new mysqli('localhost', 'obi1', 'gEstionnaire_OBI1', 'obilan');
 
 		if ($bdd->connect_errno) 
 		{
@@ -203,12 +203,12 @@
 
 	}
 
-	function ajoutPizza($bdd, $idJoueur, $idPizza_VS1, $idPizza_VS2, $idPizza_SM1)
+	function ajoutPizza($bdd, $idJoueur, $idPizza_VS1, $idPizza_VS2)
 	{
 		$compt=0;
 		$resultat=0;	
 
-		while($resultat != 1 && $compt < 3)
+		while($resultat != 1 && $compt < 2)
 		{
 
 			if($idPizza_VS1 == "NULL") $compt++;
@@ -221,12 +221,6 @@
 			else
 			{
 				if($ajout=$bdd->query("INSERT INTO `t_joint_piz_jou` (jou_id,piz_id,piz_date) VALUES (\"$idJoueur\",\"$idPizza_VS2\",'VS2');")) $compt++;
-				else $resultat=1;
-			}
-			if($idPizza_SM1 == "NULL") $compt++;
-			else
-			{
-				if($ajout=$bdd->query("INSERT INTO `t_joint_piz_jou` (jou_id,piz_id,piz_date) VALUES (\"$idJoueur\",\"$idPizza_SM1\",'SM1');")) $compt++;
 				else $resultat=1;
 			}
 		}
@@ -293,15 +287,9 @@
 	function pizzaAdmin($bdd)
 	{
 		$pizzaVS=selectionPizzaAdmin($bdd,"VS%");
-		$pizzaSM=selectionPizzaAdmin($bdd,"SM%");
 
 		echo "<h2>Vendredi Soir :</h2>";
 		while($donnees = $pizzaVS->fetch_assoc())
-		{
-			echo $donnees["piz_nom"]." : ".$donnees["total"]."<br />";
-		}
-		echo "<h2>Samedi Midi :</h2>";
-		while($donnees = $pizzaSM->fetch_assoc())
 		{
 			echo $donnees["piz_nom"]." : ".$donnees["total"]."<br />";
 		}
@@ -316,13 +304,11 @@
 	{
 		return $bdd->query("SELECT `jou_id`, `piz_nom`, `piz_date`, `piz_prix` FROM `t_joueur_jou` NATURAL JOIN `t_joint_piz_jou` NATURAL JOIN `t_pizza_piz` WHERE `jou_nom` LIKE \"$nom\";");
 	}
-
-	/*
+	
 	function exportPizza($bdd,$date)
 	{
 		return $bdd->query("SELECT `jou_nom`, `jou_prenom`, `piz_nom` FROM `t_joueur_jou` NATURAL JOIN `t_joint_piz_jou` NATURAL JOIN `t_pizza_piz` WHERE `piz_date` LIKE \"$date\" ORDER BY `jou_nom` ASC;");
 	}
-	*/
 	
 	function exportJoueur($bdd)
 	{

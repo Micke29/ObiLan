@@ -1,4 +1,6 @@
 <?php
+	session_start();
+	
 	include("./config/config.requeteSQL.php");
 
 	affichageErreur();

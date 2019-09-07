@@ -41,7 +41,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="icon" type="icon/png" href="images/icone.png">
-		<link rel="stylesheet" type="text/css" href="./css/style2.css">
+		<link rel="stylesheet" type="text/css" href="./css/style.css">
 		<style>
 		    #map {
 		    	height: 400px;

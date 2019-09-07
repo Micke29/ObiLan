@@ -37,10 +37,6 @@
 		$mail=htmlspecialchars(addslashes($_POST['mail']));
 		$mail_verif=htmlspecialchars(addslashes($_POST['mail_verif']));
 		$jeu=htmlspecialchars(addslashes($_POST['jeu']));
-
-		$pizza_VS1="NULL";
-		$pizza_VS2="NULL";
-		$pizza_SM1="NULL";
 	}
 	else
 	{
@@ -104,7 +100,7 @@
 							}
 							$idJoueurResult->free();
 
-							$ajout=ajoutPizza($bdd,$idJoueur,$pizza_VS1,$pizza_VS2,$pizza_SM1/*$_POST['pizza_VS1'],$_POST['pizza_VS2'],$_POST['pizza_SM1']*/);
+							$ajout=ajoutPizza($bdd,$idJoueur,$_POST['pizza_VS1'],$_POST['pizza_VS2']);
 							if($ajout == 0)
 							{
 								/*$_SESSION['mail_inscription'];
@@ -211,7 +207,7 @@
 						}
 						$idJoueurResult->free();
 
-						$ajout=ajoutPizza($bdd,$idJoueur,$pizza_VS1,$pizza_VS2,$pizza_SM1/*$_POST['pizza_VS1'],$_POST['pizza_VS2'],$_POST['pizza_SM1']*/);
+						$ajout=ajoutPizza($bdd,$idJoueur,$_POST['pizza_VS1'],$_POST['pizza_VS2']);
 						if($ajout == 0)
 						{
 							/*$_SESSION['mail_inscription'];

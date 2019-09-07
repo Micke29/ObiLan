@@ -41,7 +41,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<link rel="icon" type="icon/png" href="http://www.obilan.net/images/icone.png" />
 	<link rel="stylesheet" type="text/css" href="../css/style_admin.css">
-	<link rel="stylesheet" type="text/css" href="http://www.obilan.net/css/admin_style.css">
+	<link rel="stylesheet" type="text/css" href="http://www.obilan.net/css/style_admin.css">
 </head>
 <body>
 	<div class="header">
@@ -85,10 +85,6 @@
 					<?php
 					if($pizzaVS1 != "") echo $pizzaVS1.'<br>'; 
 					if($pizzaVS2 != "") echo $pizzaVS2.'<br>'; 
-					?>
-				<h3>Samedi Midi :</h3>
-					<?php
-					if($pizzaSM1 != "") echo $pizzaSM1.'<br>';
 					?>
 
 				<h2>Total (sans l'inscription) :</h2>

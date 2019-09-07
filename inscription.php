@@ -5,10 +5,13 @@
 	session_start();
 
 	date_default_timezone_set('Europe/Paris');
-	$date1=date("d.m.Y");
-	$date2="16.09.2018";
-	$date3="12.10.2018";
-	if(strtotime($date1)<strtotime($date2) && strtotime($date1)>strtotime($date3))
+	$current_date=date("d.m.Y");
+	$current_hour=date("H:i");
+	$open_date="16.09.2018";
+	$close_date="12.10.2018";
+	$close_hour="12:00";
+	if(strtotime($current_date) < strtotime($open_date) && strtotime($current_date) > strtotime($close_date) || 
+		strtotime($current_date) == strtotime($close_date) && strtotime($current_hour) >= strtotime($close_hour))
 	{
 		header("Location: ./");
 		exit();
@@ -102,6 +105,8 @@
 			if(!isset($_GET['poste']))
 			{	
 				?>
+				<div class="cont-conteneur">
+					<div class="conteneur">
 						<p>
 							<i class="fas fa-exclamation-triangle"></i>
 							Inscription possible jusqu'au 12/10
@@ -124,7 +129,6 @@
 				$jeux2=jeux($bdd);
 				$pizza1=pizza($bdd);
 				$pizza2=pizza($bdd);
-				$pizza3=pizza($bdd);
 
 				if($_GET['poste']==crypt('capitaine','cp'))
 				{
@@ -255,17 +259,17 @@
 					<div class="inscription-pizza">		
 							<label><h4>Choisissez vos pizza (optionnel)</h4></label>
 							<label><h4>Bientôt de retour, promis</h4></label>
-							<!--table>	
+							<table>	
 								<tr>
 									<td><label>Pour le vendredi Soir</label></td>
 									<td><select name="pizza_VS1">
-											<option value="NULL" selected></option>
+											<option value="NULL" selected>Aucune</option>
 											<?php
-												//while($resultatPizza = $pizza1->fetch_assoc())
+												while($resultatPizza = $pizza1->fetch_assoc())
 												{
-													//echo '<option value="'.$resultatPizza['piz_id'].'">'.$resultatPizza['piz_nom'].' (&euro; '.$resultatPizza['piz_prix'].')</option>';
+													echo '<option value="'.$resultatPizza['piz_id'].'">'.$resultatPizza['piz_nom'].' (&euro; '.$resultatPizza['piz_prix'].')</option>';
 												}
-												//$pizza1->free();
+												$pizza1->free();
 											?>
 										</select>
 									</td>
@@ -273,32 +277,18 @@
 								<tr>
 									<td><label>Une deuxième ?</label></td>
 									<td><select name="pizza_VS2">
-											<option value="NULL" selected></option>
+											<option value="NULL" selected>Aucune</option>
 											<?php
-												//while($resultatPizza = $pizza2->fetch_assoc())
+												while($resultatPizza = $pizza2->fetch_assoc())
 												{
-													//echo '<option value="'.$resultatPizza['piz_id'].'">'.$resultatPizza['piz_nom'].' (&euro; '.$resultatPizza['piz_prix'].')</option>';
+													echo '<option value="'.$resultatPizza['piz_id'].'">'.$resultatPizza['piz_nom'].' (&euro; '.$resultatPizza['piz_prix'].')</option>';
 												}
-												//$pizza2->free();
+												$pizza2->free();
 											?>
 										</select>
 									</td>
 								</tr>
-								<tr>
-									<td><label>Pour le samedi</label></td>
-									<td><select name="pizza_SM1">
-											<option value="NULL" selected></option>
-											<?php
-												//while($resultatPizza = $pizza3->fetch_assoc())
-												{
-													//echo '<option value="'.$resultatPizza['piz_id'].'">'.$resultatPizza['piz_nom'].' (&euro; '.$resultatPizza['piz_prix'].')</option>';
-												}
-												//$pizza3->free();
-											?>
-										</select>
-									</td>
-								</tr>
-							</table-->
+							</table>
 					</div>
 
 						<?php
@@ -316,9 +306,9 @@
 							</div>
 						</form>
 					<?php
-					$bdd->close();
 			}
 			else header("Location: ./");
+			$bdd->close();
 		
 			include("./config/config.footer.php");
 		?>		

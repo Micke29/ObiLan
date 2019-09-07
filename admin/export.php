@@ -7,12 +7,11 @@
 	if(isset($_GET["pizza"]))
 	{
 		header("Content-type: application/force-download");
-		if ($_GET["pizza"]=="VS") header("Content-Disposition: attachment; filename=pizza_VendrediSoir.ods");
-		elseif ($_GET["pizza"]=="SM") header("Content-Disposition: attachment; filename=pizza_SamediMidi.ods");
+		header("Content-Disposition: attachment; filename=pizza_VendrediSoir.ods");
 
 		print ("Nom	"."Prénom	"."Pizza\n");
 
-		$date=htmlspecialchars($_GET["pizza"]);
+		$date=htmlspecialchars($_GET["pizza"])."%";
 		$requete=exportPizza($bdd,$date);
 
 		while($donnees=$requete->fetch_assoc())
