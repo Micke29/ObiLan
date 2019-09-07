@@ -86,232 +86,225 @@
  	}
 ?>
 
+<!-- ------------------------------------------------------------------- -->
+<!-- -------------------- CHOIX CAPITAINE OU JOUEUR -------------------- -->
+
 <!DOCTYPE HTML>
-
 <html>
-	<head>
-		<title>Inscription</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="icon" type="icon/png" href="images/icone.png">
-		<link rel="stylesheet" type="text/css" href="./css/style.css">		
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
-	</head>
 
-	<body>
+<head>
+	<title>Inscription</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="icon" type="icon/png" href="images/icone.png">
+	<link rel="stylesheet" type="text/css" href="./css/style_inscription.css">		
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body >
+<?php
+	include("./config/config.navbar.php");
+	if(!isset($_GET['poste'])) {	
+?>
+
+<br><h5><p class="text-center text-light"><i class="fas fa-exclamation-triangle mx-auto"></i> Inscription possible jusqu'au 12/10 <i class="fas fa-exclamation-triangle"></i></p></h5><br>
+<p class="text-center text-light"> Vous êtes : </p>
+
+<?php
+	echo '<div class="row">';
+	echo '<a class="btn btn-danger btn-lg col-md-3 offset-md-2" href="./inscription.php?poste='.crypt('capitaine','cp').'" role="button">Je suis capitaine</a>';
+	echo '<a class="btn btn-danger btn-lg col-md-3 offset-md-2" href="./inscription.php?poste='.crypt('joueur','jo').'" role="button">Je suis joueur</a>';
+	echo '</div>';
+	}
+			
+	elseif($_GET['poste']==crypt('capitaine','cp') || $_GET['poste']==crypt('joueur','jo')) {
+		$bdd=connexionBDD();
+		$jeux1=jeux($bdd);
+		$jeux2=jeux($bdd);
+		$pizza1=pizza($bdd);
+		$pizza2=pizza($bdd);
+		if($_GET['poste']==crypt('capitaine','cp')) {
+?>
+
+
+<!-- --------------------------------------------------------------------------- -->
+<!-- -------------------- INSCRIPTION CAPITAINES ET JOUEURS -------------------- -->
+<div>
+	<h4><p class="text-light offset-4">Inscription Capitaine</p></h4><br>
+	<?php
+		}
+		elseif($_GET['poste']==crypt('joueur','jo')) {
+	?>
+
+	<h4><p class="text-light offset-4">Inscription Joueur</p></h4><br>
+	<?php
+		}
+	?>
+
+<div class="inscription">
+	<form class="offset-4" method="post" action="./config/config.ajout.php">
+
+	<div class="form-group">
+		<label>Votre nom</label>
+		<input type="text" name="nom" class="form-control col-md-4" placeholder="Dupont" required="required">
+	</div>
+
+	<div class="form-group">
+		<label>Votre prénom</label>
+		<input type="text" name="prenom" class="form-control col-md-4" placeholder="Roger" required="required">
+	</div>
+
+	<div class="form-group">
+		<label>Pseudo</label>
+		<input type="text" name="pseudo" class="form-control col-md-4" placeholder="XxDarkSasukeDuBledxX" required="required">
+	</div>
+
+	<div class="form-group">
+		<label>Mot de passe</label>
+		<input type="password" name="mdp" class="form-control col-md-4" placeholder="mot de passe" required="required">
+	</div>
+
+	<div class="form-group">
+		<label>Vérification mot de passe</label>
+		<input type="password" name="mdp_verif" class="form-control col-md-4" placeholder="mot de passe" title="votre mot de passe" required="required">
+	</div><br><br>
+
+	<div class="form-group">
+		<label>Mail</label>
+		<input type="email" name="mail" class="form-control col-md-4" placeholder="adresse@mail.com" title="votre mail" required="required">
+	</div>
+						
+	<div class="form-group">
+		<label>Vérification mail</label>
+		<input type="email" name="mail_verif" class="form-control col-md-4" placeholder="adresse@mail.com" title="votre mail" required="required">
+	</div>
+
+	<div class="form-group">
+		<label>Téléphone</label>
+		<input type="tel" pattern="^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$" name="tel" class="form-control col-md-4" placeholder="0601020304" title="votre numéro de téléphone" required="required">
+	</div><br><br>
+
+	<?php
+		if($_GET['poste']==crypt('capitaine','cp')) {
+	?>
+
+<div class="inscription-jeu form-group">
+		<label>Choisissez votre jeu</label>
+		<select class="form-control col-md-4" name="jeu">	
+ 			<?php
+ 				$limiteLOL=limiteLOL($bdd);
+				$limiteCS=limiteCS($bdd);
+				while($resultatJeux = $jeux1->fetch_assoc()) {
+					if($resultatJeux['jeu_nom'] != "Hearthstone") {
+						if($resultatJeux['jeu_nom'] == "League of Legends" && $limiteLOL < 16 || $resultatJeux['jeu_nom'] == "Counter-Strike" && $limiteCS < 8) echo '<option value="'.$resultatJeux['jeu_id'].'">'.$resultatJeux['jeu_nom'].'</option>';
+					}
+				}
+				$jeux1->free();
+			?>
+		</select>				
+
+	<div class="form-group">
+		<label>Créez votre équipe</label>
+		<input type="text" name="equipe" class="form-control col-md-4" placeholder="Les Hamsters Superbes" title="le nom de votre équipe" required="required">
+	</div>
+
+	<div class="form-group">
+		<label>L'acronyme de votre équipe</label>
+		<input type="text" name="acronyme" class="form-control col-md-4" placeholder="L-HS" title="le nom de votre équipe" required="required">
+	</div>
+
+	<?php
+		}
+		elseif($_GET['poste']==crypt('joueur','jo')) {
+	?>	
+
+	<div class="form-group">
+		<label>Choisissez votre équipe</label>
+		<select name="equipe" class="form-control col-md-4">
+			<?php
+				$limiteHS=limiteHS($bdd);
+				while($resultatJeux = $jeux2->fetch_assoc()) {
+					if($resultatJeux['jeu_nom'] == "Hearthstone" && $limiteHS < 16 || $resultatJeux['jeu_nom'] != "Hearthstone") {
+						echo '<optgroup label="'.$resultatJeux['jeu_nom'].'">';
+						$equipes=equipes($bdd);
+						while($resultatEquipes = $equipes->fetch_assoc()) {
+							if($resultatJeux['jeu_id'] == $resultatEquipes['jeu_id']) {
+								echo '<option value="'.$resultatEquipes['equ_id'].'">'.$resultatEquipes['equ_nom'].'</option>';
+							}
+						}
+						$equipes->free();
+						echo '</optgroup>';
+					}
+				}
+				$jeux2->free();
+			?>
+		</select>
+	</div>					
+								
+	<?php
+		}
+	?>	
+</div>
+</div><br><br>
+
+
+<!-- ------------------------------------------------------------ -->
+<!-- -------------------- INSCRIPTION PIZZAS -------------------- -->
+
+<div class="offset-4 col-md-3">
+<label><h4>Choisissez vos pizzas (optionnel)</h4></label><br>
+	<label>Pour le vendredi soir</label>
+	<select class="form-control" name="pizza_VS1">
 		<?php
-			include("./config/config.navbar.php");
-		
-			if(!isset($_GET['poste']))
-			{	
-				?>
-				<div class="cont-conteneur">
-					<div class="conteneur">
-						<p>
-							<i class="fas fa-exclamation-triangle"></i>
-							Inscription possible jusqu'au 12/10
-							<i class="fas fa-exclamation-triangle"></i>
-						</p>
-						<br>
-						<p>
-							Vous êtes :
-						</p>
-						<br>
-					<?php
-					echo '<div class="captain"><a href="./inscription.php?poste='.crypt('capitaine','cp').'">Je suis capitaine</a></div>';
-					echo '<div class="player"><a href="./inscription.php?poste='.crypt('joueur','jo').'">Je suis joueur</a></div>';
-					echo '</div></div>';
+			while($resultatPizza = $pizza1->fetch_assoc()) {
+				echo '<option value="'.$resultatPizza['piz_id'].'">'.$resultatPizza['piz_nom'].' (&euro; '.$resultatPizza['piz_prix'].')</option>';
+			}	
+			$pizza1->free();	
+		?>
+		<option value="NULL" selected>Aucune</option>
+	</select>
+
+	<label>Une deuxième ?</label>
+	<select class="form-control" name="pizza_VS2">
+		<option value="NULL" selected>Aucune</option>
+		<?php
+			while($resultatPizza = $pizza2->fetch_assoc()) {
+				echo '<option value="'.$resultatPizza['piz_id'].'">'.$resultatPizza['piz_nom'].' (&euro; '.$resultatPizza['piz_prix'].')</option>';
 			}
-			elseif($_GET['poste']==crypt('capitaine','cp') || $_GET['poste']==crypt('joueur','jo'))
-			{
-				$bdd=connexionBDD();
-				$jeux1=jeux($bdd);
-				$jeux2=jeux($bdd);
-				$pizza1=pizza($bdd);
-				$pizza2=pizza($bdd);
+			$pizza2->free();
+		?>
+	</select>
 
-				if($_GET['poste']==crypt('capitaine','cp'))
-				{
-					?>
-					<p><h3>Inscription Capitaine</h3></p>
-					<?php
-				}
-				elseif($_GET['poste']==crypt('joueur','jo'))
-				{
-					?>
-					<p><h3>Inscription Joueur</h3></p>
-					<?php
-				}
-				?>
-					<div class="inscription">
+											
+<?php
+	if($_GET['poste']==crypt('capitaine','cp')) {
+		$_SESSION['poste']="capitaine";
+	}
 
-						<form method="post" action="./config/config.ajout.php">
-							<table>
-								<tr>
-									<td><label>Nom</label></td>
-									<td><input type="text" name="nom" placeholder="nom" title="votre nom" required="required" /></td>
-								</tr>
-								<tr>
-									<td><label>Prénom</label></td>
-									<td><input type="text" name="prenom" placeholder="prenom" title="votre prénom" required="required" /></td>
-								</tr>
-								<tr>
-									<td><label>Pseudo</label></td>
-									<td><input type="text" name="pseudo" placeholder="pseudo" title="votre pseudo" required="required" /></td>
-								</tr>
-								<tr>
-									<td><label>Mot de passe</label></td>
-									<td><input type="password" name="mdp" placeholder="mot de passe" title="votre mot de passe" required="required" /></td>
-								</tr>
-								<tr>
-									<td><label>Vérifcation mot de passe</label></td>
-									<td><input type="password" name="mdp_verif" placeholder="mot de passe" title="votre mot de passe" required="required" /></td>
-								</tr>
-								<tr>
-									<td><label>Mail</label></td>
-									<td><input type="email" name="mail" placeholder="mail" title="votre mail" required="required" /></td>
-								</tr>
-								<tr>
-									<td><label>Vérification mail</label></td>
-									<td><input type="email" name="mail_verif" placeholder="mail" title="votre mail" required="required" /></td>
-								</tr>
-								<tr>
-									<td><label>Téléphone</label></td>
-									<td><input type="tel" pattern="^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$" name="tel" placeholder="0601020304" title="votre numéro de téléphone" required="required" /></td>
-								</tr>
-							</table>
-					</div>
+	elseif($_GET['poste']==crypt('joueur','jo')) {
+		$_SESSION['poste']="joueur";
+	}							 
+?>
 
-					<div class="inscription-jeu">
-							<table>
-							<?php
-							if($_GET['poste']==crypt('capitaine','cp'))
-							{
-								?>
-								<tr>
-									<td><label>Choisissez votre jeu</label></td>
-									<td><select name="jeu">
-									<?php
-										$limiteLOL=limiteLOL($bdd);
-										$limiteCS=limiteCS($bdd);
 
-										while($resultatJeux = $jeux1->fetch_assoc())
-										{
-											if($resultatJeux['jeu_nom'] != "Hearthstone") 
-											{
-												if($resultatJeux['jeu_nom'] == "League of Legends" && $limiteLOL < 16 || $resultatJeux['jeu_nom'] == "Counter-Strike" && $limiteCS < 8) echo '<option value="'.$resultatJeux['jeu_id'].'">'.$resultatJeux['jeu_nom'].'</option>';
-											}
-										}
-										$jeux1->free();
-									?>
-										</select>
-									</td>
-								</tr>
-								<tr>
-									<td><label>Créez votre équipe</label></td>
-									<td><input type="text" name="equipe" placeholder="equipe" title="le nom de votre équipe" required="required" /></td>
-								</tr>
-								<tr>
-									<td><label>L'acronyme de votre équipe</label></td>
-									<td><input type="text" name="acronyme" placeholder="acronyme" title="l'acronyme de votre équipe" required="required" /></td>
-								</tr>
-								<?php
-							}
-							elseif($_GET['poste']==crypt('joueur','jo'))
-							{
-								?>
-								<tr>
-									<td><label>Choisissez votre équipe</label></td>
-									<td><select name="equipe">
-									<?php
-										$limiteHS=limiteHS($bdd);
 
-										while($resultatJeux = $jeux2->fetch_assoc())
-										{
-											if($resultatJeux['jeu_nom'] == "Hearthstone" && $limiteHS < 16 || $resultatJeux['jeu_nom'] != "Hearthstone")
-											{
-												echo '<optgroup label="'.$resultatJeux['jeu_nom'].'">';
-												$equipes=equipes($bdd);
+<p><div class="submit">
+	<input class="btn btn-danger" type="submit" value="Valider">
+</div></p>
+</div>
 
-												while($resultatEquipes = $equipes->fetch_assoc())
-												{
-													if($resultatJeux['jeu_id'] == $resultatEquipes['jeu_id'])
-													{
-														echo '<option value="'.$resultatEquipes['equ_id'].'">'.$resultatEquipes['equ_nom'].'</option>';
-													}
-												}
+</form>
 
-												$equipes->free();
-												echo '</optgroup>';
-											}
-										}
-										$jeux2->free();
-									?>
-									</select>
-									</td>
-								</tr>
-								<?php
-							}
-							?>
-							</table>			
-					</div>
 
-					<div class="inscription-pizza">		
-							<label><h4>Choisissez vos pizza (optionnel)</h4></label>
-							<label><h4>Bientôt de retour, promis</h4></label>
-							<table>	
-								<tr>
-									<td><label>Pour le vendredi Soir</label></td>
-									<td><select name="pizza_VS1">
-											<option value="NULL" selected>Aucune</option>
-											<?php
-												while($resultatPizza = $pizza1->fetch_assoc())
-												{
-													echo '<option value="'.$resultatPizza['piz_id'].'">'.$resultatPizza['piz_nom'].' (&euro; '.$resultatPizza['piz_prix'].')</option>';
-												}
-												$pizza1->free();
-											?>
-										</select>
-									</td>
-								</tr>
-								<tr>
-									<td><label>Une deuxième ?</label></td>
-									<td><select name="pizza_VS2">
-											<option value="NULL" selected>Aucune</option>
-											<?php
-												while($resultatPizza = $pizza2->fetch_assoc())
-												{
-													echo '<option value="'.$resultatPizza['piz_id'].'">'.$resultatPizza['piz_nom'].' (&euro; '.$resultatPizza['piz_prix'].')</option>';
-												}
-												$pizza2->free();
-											?>
-										</select>
-									</td>
-								</tr>
-							</table>
-					</div>
-
-						<?php
-							if($_GET['poste']==crypt('capitaine','cp'))
-							{
-								$_SESSION['poste']="capitaine";
-							}
-							elseif($_GET['poste']==crypt('joueur','jo'))
-							{
-								$_SESSION['poste']="joueur";
-							}							 
-						?>
-							<div class="submit">
-								<input type="submit" value="Valider">
-							</div>
-						</form>
-					<?php
-					$bdd->close();
-			}
-			else header("Location: ./");
-		
-			include("./config/config.footer.php");
-		?>		
-	</body>
+					
+<?php
+$bdd->close();
+}
+else header("Location: ./");
+include("./config/config.footer.php");
+?>
+			
+</body>
 
 </html>

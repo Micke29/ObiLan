@@ -34,6 +34,8 @@
 	}
 ?>
 
+
+
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -41,109 +43,76 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="icon" type="icon/png" href="images/icone.png">
-		<link rel="stylesheet" type="text/css" href="./css/style.css">
-		<style>
-		    #map {
-		    	height: 400px;
-		    	width: auto;
-		    }
-    	</style>
+		<link rel="stylesheet" type="text/css" href="./css/style_contact.css">
 	</head>
 
-	<body>
-		<?php
-			include("./config/config.navbar.php");
-		?>
-		<br>	
-		<br>
-
-		<?php
-			$bdd=connexionBDD();
-			$jeux=jeux($bdd);
-
-			$_SESSION['mail_contact']="";
-		?>
-			<h1>Nous contacter</h1>
-	<div id="contact_mail">
-	<table>
-		<tr>
-			<td colspan="2" align="center"><h2>Par Mail</h2></td>
-			<form method="post" action="./config/config.mail.php">
-				<tr>
-					<td>
-						<label>Votre Email :</label>
-					</td>
-					<td>
-			    		<input type="email" name="email" placeholder="Votre email" required="required"><br>
-			    	</td>
-			    </tr>
-
-			    <tr>
-			    	<td>
-			    		<label>Choisissez votre jeu :</label>
-			    	</td>
-			    	<td>
-						<select name="jeu">
-						<?php
-							while($resultatJeux = $jeux->fetch_assoc())
-							{
-								echo '<option value="'.$resultatJeux['jeu_nom'].'">'.$resultatJeux['jeu_nom'].'</option>';
-							}
-						$jeux->free();
-						?>
-						<option value="Divers">Question Diverse</option>
-					</select><br>
-					</td>
-				</tr>
-				
-				<tr>
-					<td>
-						<label>Sujet :</label>
-					</td>
-					<td>
-			    		<input type="text" name="sujet" placeholder="Sujet" required="required"><br>
-			    	</td>
-			    </tr>
-
-			    <tr>
-			    	<td>
-			    		<label>Votre message :</label>
-			    	</td>
-			    	<td>
-			    		<textarea name="message" type="text" placeholder="Message" style="width: 300px; height: 120px;" required="required"></textarea><br>
-			    	</td>
-			    </tr>	
-			    <tr>
-			    	<td class="submit" colspan="2" align="center">
-			    		<input type="submit" value="Envoyer" style="width:20% !important;margin-top: 5px">
-					</td>
-				</tr>
-			</form>
-		</tr>
-	</table>
-	</div>
-
-	<div id="contact_courrier">
-		<table>
-			<tr>
-				<td align="center">
-					<h2>Par courrier</h2>
-				</td>
-			</tr>
-			<tr>
-				<td>	
-				<address>
-					Département Informatique<br>
-					U.F.R Sciences et Techniques<br>
-					Université de Bretagne Occidentale UBO 20, av Le Gorgeu C.S 93837<br>
-					29238 BREST Cedex 3
-				</address>
-				</td>
-			</tr>
-		</table>
-	</div>
-
+<body>
+	<?php
+		include("./config/config.navbar.php");
+	?>
 	<br>	
+	<br>
+
+	<?php
+		$bdd=connexionBDD();
+		$jeux=jeux($bdd);
+		$_SESSION['mail_contact']="";
+	?>
+
+
+<div class="offset-md-4">
+
+<h4>Nous contacter par mail</h4>
+
+<p><form method="post" action="./config/config.mail.php">
+
+<div class="form-group">
+	<label for="exampleInputEmail1">Votre Email</label>
+	<input name="email" type="email" class="form-control col-md-4" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Votre Email" required="required">
+</div>
+
+<div class="form-group">
+<label for="exampleInputEmail1">Sujet de votre message</label>
+<select id="inputState" class="form-control col-md-4" name="jeu">
+	<?php
+		while($resultatJeux = $jeux->fetch_assoc()) {
+			echo '<option value="'.$resultatJeux['jeu_nom'].'">'.$resultatJeux['jeu_nom'].'</option>';
+		}
+		$jeux->free();
+	?>
+	<option value="Divers" selected>Questions diverses</option>
+</select>
+</div>
+
+<p>
+<div class="form-group">
+	<label for="exampleInputEmail1">Sujet de votre message</label>
+	<input name="sujet" type="text" class="form-control col-md-4" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Sujet" required="required">
+</div>
+</p>
+
+<p>
+<div class="form-group">
+	<label for="exampleFormControlTextarea1">Votre message</label>
+	<textarea type="text" name="message" class="form-control col-md-4" id="exampleFormControlTextarea1" rows="3" placeholder="Votre message" required="required"></textarea>
+</p>
+</div>
+
+<button type="submit" value="Envoyer" class="btn btn-danger">Envoyer</button>
+
+</form></p>
+</div>
+
+<div class="offset-md-4">
+	<address>
+		<h4>Nous contacter par courrier</h4>
+		Département Informatique<br>
+		U.F.R Sciences et Techniques<br>
+		Université de Bretagne Occidentale UBO 20, av Le Gorgeu C.S 93837<br>
+		29238 BREST Cedex 3
+	</address>
+</div>
+
 
 	<div id="map" style="padding-bottom: 50px;">
 			<script>

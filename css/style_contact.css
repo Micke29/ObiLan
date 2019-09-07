@@ -1,0 +1,32 @@
+#form {
+ margin-right: 500px;
+}
+
+/*form {
+  margin-right: 500px;
+}*/
+
+#map {
+  height: 400px;
+  width: auto;
+}
+
+label {
+
+  color: #f6f6f6 !important;
+}
+
+.patate {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+h4 {
+  color: #f6f6f6 !important;
+}
+
+address {
+  margin-top: 75px;
+  padding-bottom:75px; 
+  color: #f6f6f6;
+}

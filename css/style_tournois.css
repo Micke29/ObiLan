@@ -1,0 +1,17 @@
+body {
+    background-image: url(../images/background.png);
+}
+
+.card {
+	margin-right: auto;
+	margin-left: auto;
+	margin-bottom: 135px;
+}
+
+.list-group li {
+	background-color: #f6f6f6;
+}
+
+.card-header {
+	background-color: #c9c9c9 !important
+}

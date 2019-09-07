@@ -50,6 +50,7 @@
 		{
 			if($resultatComptePizza['piz_date']=="VS1") $pizzaVS1=$resultatComptePizza['piz_nom'];
 			if($resultatComptePizza['piz_date']=="VS2") $pizzaVS2=$resultatComptePizza['piz_nom'];
+			if($resultatComptePizza['piz_date']=="SM1") $pizzaSM1=$resultatComptePizza['piz_nom'];
 
 			$total=$total+$resultatComptePizza['piz_prix'];
 		}
@@ -92,21 +93,17 @@
 			{
 				$pizza1=pizza($bdd);
 				$pizza2=pizza($bdd);
+				$pizza3=pizza($bdd);
 
 				?>
 				<br>
 				<center>
 					<form method="post" action="./config/config.modificationPizza.php">
-						<label>Choisissez vos pizza</label><br><br>
+						<label>Choisissez vos pizza</label><br />
 
-					<table>
-						<tr>
-							<td>
-								<label>Pour le vendredi Soir :</label>
-							</td>
-							<td>	
-								<select name="pizza_VS1">
-								<option value="NULL">Aucune</option>
+						<label>Pour le vendredi Soir :</label>
+							<select name="pizza_VS1">
+								<option value="NULL"></option>
 							<?php
 								while($resultatPizza = $pizza1->fetch_assoc())
 								{
@@ -115,29 +112,33 @@
 								}
 								$pizza1->free();
 							?>
-							</select><br/>
-						</td>
-						</tr>
-						<tr>
-							<td>
-								<label>Pour le vendredi Soir :</label>
-							</td>
-							<td>
-								<select name="pizza_VS2">
-									<option value="NULL">Aucune</option>
-								<?php
-									while($resultatPizza = $pizza2->fetch_assoc())
-									{
-										if($resultatPizza['piz_nom']==$pizzaVS2)	echo '<option value="'.$resultatPizza['piz_id'].'" selected>'.$resultatPizza['piz_nom'].' (&euro; '.$resultatPizza['piz_prix'].')</option>';
-										else echo '<option value="'.$resultatPizza['piz_id'].'">'.$resultatPizza['piz_nom'].' (&euro; '.$resultatPizza['piz_prix'].')</option>';
-									}
-									$pizza2->free();
-								?>
-								</select><br/>
-							</td>
-						</tr>
-					</table>
-					<br>
+							</select><br />
+						<label>Pour le vendredi Soir :</label>
+							<select name="pizza_VS2">
+								<option value="NULL"></option>
+							<?php
+								while($resultatPizza = $pizza2->fetch_assoc())
+								{
+									if($resultatPizza['piz_nom']==$pizzaVS2)	echo '<option value="'.$resultatPizza['piz_id'].'" selected>'.$resultatPizza['piz_nom'].' (&euro; '.$resultatPizza['piz_prix'].')</option>';
+									else echo '<option value="'.$resultatPizza['piz_id'].'">'.$resultatPizza['piz_nom'].' (&euro; '.$resultatPizza['piz_prix'].')</option>';
+								}
+								$pizza2->free();
+							?>
+							</select><br />
+
+						<label>Pour le samedi :</label>
+							<select name="pizza_SM1">
+								<option value="NULL"></option>
+							<?php
+								while($resultatPizza = $pizza3->fetch_assoc())
+								{
+									if($resultatPizza['piz_nom']==$pizzaSM1)	echo '<option value="'.$resultatPizza['piz_id'].'" selected>'.$resultatPizza['piz_nom'].' (&euro; '.$resultatPizza['piz_prix'].')</option>';
+									else echo '<option value="'.$resultatPizza['piz_id'].'">'.$resultatPizza['piz_nom'].' (&euro; '.$resultatPizza['piz_prix'].')</option>';
+								}
+								$pizza3->free();
+							?>
+							</select><br><br>
+
 						<label class="submit"><input type="submit" value="Valider"></label><br />
 					</form>
 				</center>
@@ -146,15 +147,8 @@
 			elseif($_GET['modif']=="compte")
 			{
 				?>
-
 				<form method="post" action="config/config.modificationCompte.php">
-				<br>
-					<table>
-						<tr>
-							<td>
-								<label>Equipe</label>
-							</td>
-							<td>
+					<label>Equipe</label>
 					<select name="equipe">
 					<?php
 						$limiteHS=limiteHS($bdd);
@@ -183,27 +177,12 @@
 						$jeux->free();
 					?>
 					</select>
-				</td>
-			</tr>
 
-			<tr>
-				<td>
 					<label>Email</label>
-				</td>
-				<td>	
 					<?php echo '<input type="email" name="email" value="'.$email.'" required="required">'; ?>
-				</td>
-			</tr>
-			<tr>
-				<td>		
+					
 					<label>Téléphone</label>
-				</td>
-				<td>
 					<?php echo '<input type="tel" pattern="^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$" name="tel" placeholder="0601020304" value="'.$telephone.'" title="votre numéro de téléphone" required="required">'; ?>
-				</td>
-			</tr>
-		</table>
-
 				<div class="submit">
 					<input type="submit" value="Valider">
 				</div>
@@ -214,24 +193,11 @@
 			{
 				?>
 				<form method="post" action="config/config.modificationMdp.php">
-					<table>
-						<tr>
-							<td>
-								<label>Nouveau Mot de Passe</label>
-							</td>
-							<td>
-								<input type="password" name="mdp" title="Nouveau Mot de Passe">
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<label>Répétez votre Mot de Passe</label>
-							</td>
-							<td>	
-								<input type="password" name="mdp_verif" title="Nouveau Mot de Passe">
-							</td>
-						</tr>
-					</table>
+					<label>Nouveau Mot de Passe</label>
+					<input type="password" name="mdp" title="Nouveau Mot de Passe">
+
+					<label>Répétez votre Mot de Passe</label>
+					<input type="password" name="mdp_verif" title="Nouveau Mot de Passe">
 				<div class="submit">
 					<input type="submit" value="Valider">
 				</div>
@@ -258,9 +224,9 @@
 					<table id="compte">
 						<thead>
 							<tr>
-								<th class="info">Pseudo</th>
-								<th class="info">Date d'inscription</th>
-								<th class="info" colspan="2">Action</th>
+								<th>Pseudo</th>
+								<th>Date d'inscription</th>
+								<th colspan="2">Action</th>
 							</tr>
 						</thead>
 						
@@ -271,8 +237,8 @@
 					{
 					?>
 						<tr>
-							<td class="info"><?php echo $donnees['cpt_pseudo'] ?></td>
-							<td class="info"><?php echo $donnees['cpt_date'] ?></td>
+							<td><?php echo $donnees['cpt_pseudo'] ?></td>
+							<td><?php echo $donnees['cpt_date'] ?></td>
 							<?php
 							if($donnees['jou_capitaine']=="0")
 							{
@@ -321,6 +287,10 @@
 			<?php
 			if($pizzaVS1 != "") echo $pizzaVS1.'<br>'; 
 			if($pizzaVS2 != "") echo $pizzaVS2.'<br>'; 
+			?>
+		<h3>Samedi Midi :</h3>
+			<?php
+			if($pizzaSM1 != "") echo $pizzaSM1.'<br>';
 			?>
 
 		<h2>Total (sans l'inscription) :</h2>

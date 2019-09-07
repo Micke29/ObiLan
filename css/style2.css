@@ -20,7 +20,8 @@ body
 
 #copyright {
 	color: white;
-	margin-left: 15px;
+	margin-left: auto
+	margin-right:auto;
 }
 
 footer {
@@ -80,3 +81,7 @@ footer li {
 }
 
 /* ---------------------------------------------- */
+
+.card-body {
+	background-color: lightgrey !important;
+}

@@ -1,11 +1,3 @@
-<?php
-	session_start();
-	
-	if(isset($_SESSION["pseudo"]))
-	{
-		header("Location: compte.php");
-	}
-?>
 <!DOCTYPE HTML>
 
 <html>
@@ -18,10 +10,11 @@
 	</head>
 
 	<body id="login-body">
+		
 		<header>
-			<div class="header">
-				<a href="./"><img src="./images/logo.png" class="logo"/></a>
-			</div>
+		<?php
+			include("./config/config.navbar.php");
+		?>
 		</header>
 
 		<div id="login-box">
