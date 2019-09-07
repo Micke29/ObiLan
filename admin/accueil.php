@@ -18,15 +18,15 @@
 	<title>Accueil</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<link rel="icon" type="icon/png" href="http://www.obilan.net/images/icone.png" />
+	<link rel="icon" type="icon/png" href="../images/icone.png" />
 	<link rel="stylesheet" type="text/css" href="../css/style_admin.css">
-	<link rel="stylesheet" type="text/css" href="http://www.obilan.net/css/style_admin.css">
+	<link rel="stylesheet" type="text/css" href="../css/style_admin.css">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
 </head>
 
 <body>
 	<div class="header">
-		<a href="http://www.obilan.net" target="blank"><img src="http://www.obilan.net/images/logo.png" class="logo"/></a>
+		<a href="../" target="blank"><img src="../images/logo.png" class="logo"/></a>
 		<ul style="float:right;">
 			<li><a href="./verifPizza.php">Contrôle Pizza</a></li>
 			<li><a href="./logout.php">Déconnexion</a></li>
