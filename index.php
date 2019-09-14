@@ -1,10 +1,33 @@
 <?php
-
+  session_start();
+  if(isset($_SESSION['inscription'])) {
+    if($_SESSION['inscription'] == "ok") {
+      echo '<script type="text/javascript">window.alert("Bienvenu(e) parmis nous, votre inscription est validée");</script>';
+      unset($_SESSION['inscription']);
+    }
+    elseif($_SESSION['inscription'] == "erreur") {
+      echo '<script type="text/javascript">window.alert("Une erreur est survenue, merci de reessayer ulterieurement");</script>';
+      unset($_SESSION['inscription']);
+    }
+  }
 ?>
 
 <!DOCTYPE HTML>
 <html>
 
+<head>
+  <title>Obilan</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="icon/png" href="images/icone.png">
+  <link rel="stylesheet" type="text/css" href="./css/style2.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+
+<body>
+  <?php
+    include("./config/config.navbar.php");
+  ?>
 
 <div class="row">
 <div class="col-sm-8">
